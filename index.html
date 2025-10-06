@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Carnival 2025 - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================ */
+        /* শুধুমাত্র লগইন ইন্টারফেসের জন্য পরিবর্তিত CSS      */
+        /* ================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            /* একটি নতুন, পরিচ্ছন্ন ব্যাকগ্রাউন্ড */
+            background: #eef5f3;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            /* নতুন কার্ড ডিজাইন */
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            padding: 50px 40px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .login-container.hidden {
+            transform: scale(0.8);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo-container { margin-bottom: 25px; }
+        .logo { 
+            width: 80px; 
+            height: 80px; 
+            margin: 0 auto 15px; 
+            background: linear-gradient(135deg, #00796b, #004d40); 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 121, 107, 0.3);
+        }
+        .logo svg { width: 45px; height: 45px; }
+        h1 { 
+            /* নতুন টেক্সট স্টাইল */
+            color: #1a202c; 
+            font-size: 28px; 
+            margin-bottom: 5px; 
+            font-weight: 700; 
+        }
+        .subtitle { 
+            color: #4a5568; 
+            font-size: 16px; 
+            margin-bottom: 30px; 
+            font-weight: 400; 
+        }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            color: #2d3748; 
+            font-weight: 600; 
+            font-size: 14px; 
+        }
+        input[type="password"] { 
+            /* নতুন ইনপুট ফিল্ড ডিজাইন */
+            width: 100%; 
+            padding: 14px 18px; 
+            border: 1px solid #cbd5e0; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            transition: all 0.3s; 
+            background-color: #f7fafc; 
+            color: #2d3748; 
+        }
+        input[type="password"]::placeholder { color: #a0aec0; }
+        input[type="password"]:focus { 
+            outline: none; 
+            border-color: #00796b; 
+            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); 
+            background-color: #ffffff;
+        }
+        .login-btn { 
+            /* নতুন বাটন ডিজাইন */
+            background: #00796b; 
+            color: #ffffff; 
+            border: none; 
+            border-radius: 12px; 
+            padding: 15px; 
+            width: 100%; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            margin-top: 10px; 
+        }
+        .login-btn:hover { 
+            background: #004d40;
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0, 77, 64, 0.25); 
+        }
+        .message { margin-top: 20px; padding: 12px; border-radius: 8px; font-weight: 500; text-align: center; display: none; }
+        .error { background-color: #ffebee; color: #c62828; }
+
+        /* Welcome Screen অপরিবর্তিত */
+        #post-login-welcome { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 10000; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        #post-login-welcome.visible { opacity: 1; }
+        #post-login-welcome h1 { color: white; font-size: clamp(2.5em, 5vw, 4em); text-align: center; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: text-pop-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; transform: scale(0.8); opacity: 0; letter-spacing: 1px; }
+        @keyframes text-pop-in { to { transform: scale(1); opacity: 1; } }
+
+        /* ================================================ */
+        /* মূল অ্যাপ্লিকেশনের CSS এখান থেকে অপরিবর্তিত রয়েছে  */
+        /* ================================================ */
+        :root{
+          --green:#0f9d58;
+          --deep-green:#0b8450;
+          --muted:#9aa0a6;
+          --bg:#f7f8f8;
+          --card:#ffffff;
+          --light-gray:#efefef;
+        }
+        .container{ max-width:1100px; margin:28px auto; padding:0 18px; }
+        .topbar{ background:linear-gradient(180deg,var(--green),var(--deep-green)); color:#fff;padding:20px 22px; border-radius:6px 6px 0 0; }
+        .top-title{ font-weight:600; font-size:18px; margin:0 0 6px; position: relative; }
+        .meta{ display:flex; gap:18px; font-size:13px; margin-bottom:12px; flex-wrap: wrap; }
+        .tabs{ display:flex; gap:22px; padding-top:12px; flex-wrap:wrap; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+        .tab{ padding:8px 2px; color:rgba(255,255,255,0.92); cursor:pointer; position:relative; background:none; border:none; font-family: inherit; font-size: 1em; }
+        .tab:focus { outline: 2px solid #fff; outline-offset: 4px; border-radius: 2px; }
+        .tab.active{ font-weight: 600; }
+        .tab.active::after{ content:""; position:absolute; left:0; right:0; height:3px; background:#fff; bottom:-13px; border-radius:2px; }
+        .card{ background:var(--card); border-radius:0 0 6px 6px; padding:18px 22px; box-shadow:0 6px 18px rgba(20,20,20,0.06); margin-top:0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        .card.hidden { display: none; }
+        .match-dropdown { position: relative; display: inline-block; }
+        .dropdown-toggle { background: none; border: none; color: white; font-size: 18px; font-weight: 600; cursor: pointer; padding: 5px; font-family: "Inter", sans-serif; }
+        .dropdown-toggle:hover { opacity: 0.9; }
+        .dropdown-content { display: none; position: absolute; background-color: #f1f1f1; min-width: 320px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 100; border-radius: 4px; max-height: 300px; overflow-y: auto; }
+        .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; font-weight: 400; }
+        .dropdown-content a:hover { background-color: #ddd; }
+        .show { display: block; }
+        .squad-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; margin-top:12px; }
+        .squad-item{ padding:18px; border-radius:14px; font-weight:600; color:#fff; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.15); transition:transform 0.2s; text-decoration: none; display: block; }
+        .squad-item:hover{transform:translateY(-4px)}
+        .squad-item:nth-child(1){background:linear-gradient(135deg,#ff6a00,#ffbb00);} .squad-item:nth-child(2){background:linear-gradient(135deg,#00c6ff,#0072ff);} .squad-item:nth-child(3){background:linear-gradient(135deg,#43e97b,#38f9d7);} .squad-item:nth-child(4){background:linear-gradient(135deg,#fa709a,#fee140);} .squad-item:nth-child(5){background:linear-gradient(135deg,#30cfd0,#330867);} .squad-item:nth-child(6){background:linear-gradient(135deg,#ff0844,#ffb199);} .squad-item:nth-child(7){background:linear-gradient(135deg,#8e2de2,#4a00e0);} .squad-item:nth-child(8){background:linear-gradient(135deg,#11998e,#38ef7d);} .squad-item:nth-child(9){background:linear-gradient(135deg,#f7971e,#ffd200);} .squad-item:nth-child(10){background:linear-gradient(135deg,#56ccf2,#2f80ed);} .squad-item:nth-child(11){background:linear-gradient(135deg,#ee0979,#ff6a00);} .squad-item:nth-child(12){background:linear-gradient(135deg,#7f00ff,#e100ff);}
+        .points-table-section h4 { border-bottom: 2px solid var(--light-gray); padding-bottom: 8px; margin-top: 24px; margin-bottom: 16px; color: var(--deep-green); }
+        .groups-table, .points-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+        .groups-table td, .points-table th, .points-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .groups-table td:first-child { font-weight: 600; background-color: #f9f9f9; }
+        .points-table th { background-color: var(--deep-green); color: white; font-weight: 600; }
+        .points-table td:first-child { font-weight: 600; }
+        .points-table tr:nth-child(even) { background-color: #f9f9f9; }
+        .disclaimer { text-align: center; color: red; font-weight: 600; margin-top: 30px; }
+        .team-a{ color: #E53935; } .team-b{ color: #1E88E5; } .team-c{ color: #43A047; } .team-d{ color: #8E24AA; }
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 0; border: 1px solid #888; width: 80%; max-width: 650px; border-radius: 8px; position: relative; animation-name: animatetop; animation-duration: 0.4s; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        @keyframes animatetop { from {top: -300px; opacity: 0} to {top: 0; opacity: 1} }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background-color: var(--deep-green); color: white; border-radius: 8px 8px 0 0; }
+        .modal-header h3 { margin: 0; font-size: 18px; }
+        .modal-close { color: white; font-size: 28px; font-weight: bold; opacity: 0.8; }
+        .modal-close:hover, .modal-close:focus { opacity: 1; text-decoration: none; cursor: pointer; }
+        #modal-body-content { padding: 20px; max-height: 70vh; overflow-y: auto; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 20px; background-color: #f1f1f1; border-radius: 0 0 8px 8px; }
+        .btn { border: none; padding: 10px 20px; border-radius: 5px; font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; }
+        .save-btn { background-color: var(--green); color: white; }
+        .save-btn:hover { background-color: var(--deep-green); }
+        .add-player-btn { background-color: #1a73e8; color: white; }
+        .add-player-btn:hover { background-color: #1765c6; }
+        .player-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .player-table th, .player-table td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle; }
+        .player-table th { background-color: #f2f2f2; font-weight: 600; }
+        .player-photo { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; cursor: pointer; }
+        .editable-name, .editable-position { cursor: pointer; }
+        .editable-position::after { content: ' ▾'; font-size: 12px; color: #999; }
+        .player-table input, .player-table select { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 1em; }
+        .playing-xi-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .team-column { flex: 1; min-width: 250px; }
+        .team-name-header { font-size: 1.2em; color: var(--deep-green); margin-bottom: 15px; border-bottom: 2px solid var(--light-gray); padding-bottom: 8px; }
+        .player-list { list-style: none; padding: 0; margin: 0; }
+        .player-list li { display: flex; align-items: center; margin-bottom: 14px; }
+        .player-photo-small { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 12px; }
+        .player-details { display: flex; flex-direction: column; }
+        .player-name { font-weight: 600; font-size: 1em; }
+        .player-role { font-size: 0.85em; color: var(--muted); }
+        .points-table select, .points-table input { width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #ccc; background-color: #fff; }
+        .points-table input { text-align: right; }
+        .points-save-btn { background-color: var(--green); color: white; border: none; padding: 12px 24px; border-radius: 5px; font-weight: 600; cursor: pointer; display: block; margin: 20px 0 10px auto; font-family: "Inter", sans-serif; font-size: 1em; }
+        .points-save-btn:hover { background-color: var(--deep-green); }
+        .knockout-selector { margin-top: 40px; border-top: 2px solid var(--light-gray); padding-top: 10px; }
+        .knockout-selector h4 { font-size: 1.3em; color: var(--deep-green); }
+        .knockout-selector h5 { font-size: 1.15em; color: #333; margin-top: 20px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .knockout-match { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+        .knockout-match label { font-weight: 600; min-width: 200px; }
+        .knockout-match select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; min-width: 180px; }
+        .knockout-match .vs-text { font-weight: bold; color: var(--muted); }
+        .bowling-section-header { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .current-bowler-selector { display: flex; gap: 10px; align-items: center; }
+        .current-bowler-selector label { font-weight: 600; }
+        .current-bowler-selector select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .add-bowler-btn { background-color: var(--deep-green); color: white; border: none; padding: 8px 16px; border-radius: 5px; font-weight: 600; cursor: pointer; display: block; margin-top: 10px; font-family: "Inter", sans-serif; }
+        .add-bowler-btn:hover { background-color: var(--green); }
+        .batting-summary-row td { font-weight: bold; background-color: #f2f2f2; }
+        .scorecard-settings, .toss-section { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background-color: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+        .scorecard-settings label, .toss-section label { font-weight: 600; }
+        .scorecard-settings select, .toss-section select, .toss-section button { padding: 8px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit; font-size: 0.95em;}
+        .toss-section button { background-color: var(--deep-green); color: white; cursor: pointer; }
+        .toss-section button:hover { background-color: var(--green); }
+        .stat-increment-btn { background-color: #e0e0e0; border: 1px solid #ccc; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-weight: bold; margin-left: 8px; }
+        .out-btn { background-color: #E53935; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .batsman-out-row { background-color: #fbe9e7; opacity: 0.7; }
+        .scorecard-actions { text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee; }
+        .scorecard-actions .btn { margin: 0 10px; }
+        .save-score-btn { background-color: var(--green); color: white; }
+        .reset-match-btn { background-color: #E53935; color: white; }
+        .reset-match-btn:hover { background-color: #c62828; }
+        .action-btn-group { display: flex; gap: 5px; align-items: center; justify-content: flex-end; }
+        .delete-btn { background-color: #f44336; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; }
+        .delete-btn:hover { background-color: #d32f2f; }
+        .reset-btn { background-color: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .target-display { background-color: #e3f2fd; padding: 12px; border-radius: 6px; margin: 20px 0; text-align: center; font-weight: bold; color: #1e88e5; font-size: 1.1em; }
+        .live-score-container { padding: 10px; }
+        .live-score-container h3 { text-align: center; color: var(--deep-green); }
+        .live-score-summary { text-align: center; font-size: 1.1em; margin-bottom: 15px; }
+        .live-innings-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+        .live-innings-card .team-score { font-size: 2em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .live-innings-card .team-score small { font-size: 0.5em; font-weight: 400; color: var(--muted); }
+        .live-player-details { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; }
+        .live-player-details table { width: 100%; text-align: left; }
+        .live-player-details td:last-child { text-align: right; font-weight: 600; }
+        .match-result { background-color: var(--deep-green); color: white; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: 600; margin-top: 20px; }
+        #fixtures-panel h3, #fixtures-panel h4 { color: var(--deep-green); border-bottom: 2px solid var(--light-gray); padding-bottom: 8px; margin-bottom: 20px; }
+        .fixture-day-card { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+        .fixture-day-header { background-color: #f9f9f9; padding: 12px 18px; font-weight: 600; color: #333; border-bottom: 1px solid #e0e0e0; }
+        .fixture-match-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; gap: 10px; }
+        .fixture-match-item:last-child { border-bottom: none; }
+        .match-time { font-weight: 600; color: var(--deep-green); min-width: 90px; }
+        .match-teams { display: flex; align-items: center; gap: 12px; font-weight: 600; flex-grow: 1; }
+        .match-teams .vs { color: var(--muted); font-size: 0.9em; }
+        .match-group { font-size: 0.9em; color: var(--muted); background: #f1f1f1; padding: 4px 8px; border-radius: 4px; }
+        .fixture-knockout-header { margin-top: 30px; }
+        .fixture-match-item .match-teams select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; background-color: #fff; font-family: inherit; font-weight: 600; max-width: 150px; }
+        .match-notes { min-width: 150px; padding: 5px 8px; border-radius: 4px; background-color: #f8f9fa; font-size: 0.9em; color: #555; text-align: right; cursor: text; }
+        .match-notes:focus { outline: 1px solid var(--deep-green); background-color: #fff; box-shadow: 0 0 5px rgba(15, 157, 88, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="logo-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h-2zm0 6h2v2h-2z"/>
+                    <path d="M14.24 6.34l-1.41-1.41-5.66 5.66 1.41 1.41zM18.36 9.88l-1.41-1.41-1.41 1.41 1.41 1.41zM9.88 18.36l-1.41-1.41 1.41-1.41 1.41 1.41z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19.07 4.93a10 10 0 00-14.14 0l1.41 1.41a8 8 0 0111.32 0l1.41-1.41zM6.34 17.66l1.41-1.41a2 2 0 10-2.82-2.82l-1.42 1.41a4 4 0 005.66 5.66z"/>
+                </svg>
+            </div>
+            <h1>Cricket Carnival 2025</h1>
+            <div class="subtitle">Admin Panel Access</div>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginCode">Login Code</label>
+                <input type="password" id="loginCode" placeholder="Enter secret code" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Enter Carnival</button>
+            
+            <div id="message" class="message"></div>
+        </form>
+    </div>
+
+    <div id="post-login-welcome">
+        <h1>Welcome to<br>Cricket Carnival 2025</h1>
+    </div>
+
+    <div id="mainAppContainer" style="display: none;">
+        <div class="container">
+            <div class="topbar">
+                <div class="top-title">
+                    <div class="match-dropdown">
+                        <button class="dropdown-toggle" id="dropdownBtn">
+                            <span id="selectedMatch">Select a Match</span> ▾
+                        </button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <a data-match="ID vs Principal (Group D)" data-match-ref="id_vs_principal" href="#">ID vs Principal (Group D)</a>
+                            <a data-match="Corporate Credit vs Card Operation (Group A)" data-match-ref="cc_vs_co" href="#">Corporate Credit vs Card Operation (Group A)</a>
+                            <a data-match="Treasury vs Card Business (Group C)" data-match-ref="tr_vs_cb" href="#">Treasury vs Card Business (Group C)</a>
+                            <a data-match="Dhaka Central Zone vs Dhaka South Zone (Group B)" data-match-ref="dc_vs_ds" href="#">Dhaka Central Zone vs Dhaka South Zone (Group B)</a>
+                            <a data-match="Card Operation vs ICT Operation (Group A)" data-match-ref="co_vs_ict" href="#">Card Operation vs ICT Operation (Group A)</a>
+                            <a data-match="Card Business vs CAM &amp; RD (Group C)" data-match-ref="cb_vs_cam" href="#">Card Business vs CAM &amp; RD (Group C)</a>
+                            <a data-match="Corporate Credit vs ICT Operation (Group A)" data-match-ref="cc_vs_ict" href="#">Corporate Credit vs ICT Operation (Group A)</a>
+                            <a data-match="ID vs SDD (Group D)" data-match-ref="id_vs_sdd" href="#">ID vs SDD (Group D)</a>
+                            <a data-match="Dhaka South Zone vs Narayangonj Zone (Group B)" data-match-ref="ds_vs_nz" href="#">Dhaka South Zone vs Narayangonj Zone (Group B)</a>
+                            <a data-match="Treasury vs CAM &amp; RD (Group C)" data-match-ref="tr_vs_cam" href="#">Treasury vs CAM &amp; RD (Group C)</a>
+                            <a data-match="SDD vs Principal (Group D)" data-match-ref="sdd_vs_p" href="#">SDD vs Principal (Group D)</a>
+                            <a data-match="Dhaka Central Zone vs Narayangonj Zone (Group B)" data-match-ref="dc_vs_nz" href="#">Dhaka Central Zone vs Narayangonj Zone (Group B)</a>
+                            <a data-match="QF1: Winner A vs Runner-up C" data-match-ref="qf1" href="#">QF1: Winner A vs Runner-up C</a>
+                            <a data-match="QF2: Winner C vs Runner-up A" data-match-ref="qf2" href="#">QF2: Winner C vs Runner-up A</a>
+                            <a data-match="QF4: Winner D vs Runner-up B" data-match-ref="qf4" href="#">QF4: Winner D vs Runner-up B</a>
+                            <a data-match="QF3: Winner B vs Runner-up D" data-match-ref="qf3" href="#">QF3: Winner B vs Runner-up D</a>
+                            <a data-match="SF1: Winner QF2 vs Winner QF4" data-match-ref="sf1" href="#">SF1: Winner QF2 vs Winner QF4</a>
+                            <a data-match="SF2: Winner QF1 vs Winner QF3" data-match-ref="sf2" href="#">SF2: Winner QF1 vs Winner QF3</a>
+                            <a data-match="Final: Winner SF1 vs Winner SF2" data-match-ref="final" href="#">Final: Winner SF1 vs Winner SF2</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="meta">
+                    <div><strong>Series:</strong> Cricket Carnival 2025</div>
+                    <div><strong>Venue:</strong> Dhaka University Griund, Dhaka</div>
+                    <div id="matchDateTime"><strong>Date &amp; Time:</strong> Today, 3:00 PM LOCAL</div>
+                </div>
+                <div aria-label="Match Information" class="tabs" role="tablist">
+                    <button aria-controls="info-panel" aria-selected="true" class="tab active" id="info-tab" role="tab">Info</button>
+                    <button aria-controls="live-panel" aria-selected="false" class="tab" id="live-tab" role="tab" tabindex="-1">Live</button>
+                    <button aria-controls="scorecard-panel" aria-selected="false" class="tab" id="scorecard-tab" role="tab" tabindex="-1">Scorecard</button>
+                    <button aria-controls="squads-panel" aria-selected="false" class="tab" id="squads-tab" role="tab" tabindex="-1">Squads</button>
+                    <button aria-controls="points-panel" aria-selected="false" class="tab" id="points-tab" role="tab" tabindex="-1">Points Table</button>
+                    <button aria-controls="fixtures-panel" aria-selected="false" class="tab" id="fixtures-tab" role="tab" tabindex="-1">Fixtures</button>
+                </div>
+            </div>
+            <div aria-labelledby="info-tab" class="card" id="info-panel" role="tabpanel">
+                <h3>Match Info</h3>
+                <p>উপরের ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
+            </div>
+            <div aria-labelledby="live-tab" class="card" id="live-panel" role="tabpanel">
+                <h3>Live Score</h3>
+                <p>লাইভ স্কোর দেখার জন্য ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
+            </div>
+            <div aria-labelledby="scorecard-panel" class="card hidden" id="scorecard-panel" role="tabpanel">
+                <h3>Scorecard</h3>
+                <div id="scorecardContent">
+                    <p>উপরের ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
+                </div>
+            </div>
+            <div aria-labelledby="squads-tab" class="card hidden" id="squads-panel" role="tabpanel">
+                <h3>Teams</h3>
+                <div class="squad-list">
+                    <a class="squad-item" data-team="Corporate_Credit" href="#">Corporate Credit</a>
+                    <a class="squad-item" data-team="Card_Operation" href="#">Card Operation</a>
+                    <a class="squad-item" data-team="ICT_Operation" href="#">ICT Operation</a>
+                    <a class="squad-item" data-team="Dhaka_South_Zone" href="#">Dhaka South Zone</a>
+                    <a class="squad-item" data-team="Narayangonj_Zone" href="#">Narayangonj Zone</a>
+                    <a class="squad-item" data-team="Dhaka_Central_Zone" href="#">Dhaka Central Zone</a>
+                    <a class="squad-item" data-team="Treasury" href="#">Treasury</a>
+                    <a class="squad-item" data-team="Card_Business" href="#">Card Business</a>
+                    <a class="squad-item" data-team="CAM_RD_Division" href="#">CAM &amp; RD</a>
+                    <a class="squad-item" data-team="ID_Division" href="#">ID</a>
+                    <a class="squad-item" data-team="SDD_Division" href="#">SDD</a>
+                    <a class="squad-item" data-team="Principal_Branch" href="#">Principal</a>
+                </div>
+            </div>
+            <div aria-labelledby="points-tab" class="card hidden" id="points-panel" role="tabpanel">
+                <div class="points-table-section">
+                    <h3>Points Table</h3>
+                    <h4 data-group-name="Group_A">Group A</h4>
+                    <table class="points-table">
+                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td data-team-name="Corporate Credit">Corporate Credit</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="Card Operation">Card Operation</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="ICT Operation">ICT Operation</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 data-group-name="Group_B">Group B</h4>
+                    <table class="points-table">
+                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td data-team-name="Dhaka South Zone">Dhaka South Zone</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="Dhaka Central Zone">Dhaka Central Zone</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="Narayangonj Zone">Narayangonj Zone</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 data-group-name="Group_C">Group C</h4>
+                    <table class="points-table">
+                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td data-team-name="Treasury">Treasury</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="Card Business">Card Business</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="CAM & RD">CAM &amp; RD</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 data-group-name="Group_D">Group D</h4>
+                    <table class="points-table">
+                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td data-team-name="ID">ID</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="SDD">SDD</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                            <tr>
+                                <td data-team-name="Principal">Principal</td>
+                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                <td><input type="text" value="0.00"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="knockout-selector">
+                        <h4>Knockout Stage Selections</h4>
+                        <h5>Super Eight</h5>
+                        <div class="knockout-match">
+                            <label>QF1: Winner A vs Runner-up C</label>
+                            <select data-placeholder="Winner A" id="k_qf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up C" id="k_qf1_t2"></select>
+                        </div>
+                        <div class="knockout-match">
+                            <label>QF2: Winner C vs Runner-up A</label>
+                            <select data-placeholder="Winner C" id="k_qf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up A" id="k_qf2_t2"></select>
+                        </div>
+                        <div class="knockout-match">
+                            <label>QF4: Winner D vs Runner-up B</label>
+                            <select data-placeholder="Winner D" id="k_qf4_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up B" id="k_qf4_t2"></select>
+                        </div>
+                        <div class="knockout-match">
+                            <label>QF3: Winner B vs Runner-up D</label>
+                            <select data-placeholder="Winner B" id="k_qf3_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up D" id="k_qf3_t2"></select>
+                        </div>
+                        <h5>Semi Final</h5>
+                        <div class="knockout-match">
+                            <label>SF1: Winner QF2 vs Winner QF4</label>
+                            <select data-placeholder="Winner QF2" id="k_sf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF4" id="k_sf1_t2"></select>
+                        </div>
+                        <div class="knockout-match">
+                            <label>SF2: Winner QF1 vs Winner QF3</label>
+                            <select data-placeholder="Winner QF1" id="k_sf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF3" id="k_sf2_t2"></select>
+                        </div>
+                        <h5>Final</h5>
+                        <div class="knockout-match">
+                            <label>Final: Winner SF1 vs Winner SF2</label>
+                            <select data-placeholder="Winner SF1" id="k_final_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner SF2" id="k_final_t2"></select>
+                        </div>
+                    </div>
+                    <button class="points-save-btn" id="savePointsBtn">Save Changes</button>
+                </div>
+            </div>
+            <div aria-labelledby="fixtures-tab" class="card hidden" id="fixtures-panel" role="tabpanel">
+                <h3>Full Fixture</h3>
+                <h4>Group stage — 12 matches</h4>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Sat 1 Nov 2025</div>
+                    <div class="fixture-match-item" data-match-ref="id_vs_principal">
+                        <span class="match-time">07:30–10:00</span>
+                        <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
+                        <span class="match-group">(Group D)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="cc_vs_co">
+                        <span class="match-time">10:00–12:30</span>
+                        <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">Card Operation</span></div>
+                        <span class="match-group">(Group A)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="tr_vs_cb">
+                        <span class="match-time">12:30–03:00</span>
+                        <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">Card Business</span></div>
+                        <span class="match-group">(Group C)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Fri 7 Nov 2025</div>
+                    <div class="fixture-match-item" data-match-ref="dc_vs_ds">
+                        <span class="match-time">07:30–10:00</span>
+                        <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Dhaka South Zone</span></div>
+                        <span class="match-group">(Group B)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="co_vs_ict">
+                        <span class="match-time">10:00–12:30</span>
+                        <div class="match-teams"><span class="team-a">Card Operation</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
+                        <span class="match-group">(Group A)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="cb_vs_cam">
+                        <span class="match-time">12:30–03:00</span>
+                        <div class="match-teams"><span class="team-c">Card Business</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
+                        <span class="match-group">(Group C)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Sat 8 Nov 2025</div>
+                    <div class="fixture-match-item" data-match-ref="cc_vs_ict">
+                        <span class="match-time">07:30–10:00</span>
+                        <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
+                        <span class="match-group">(Group A)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="id_vs_sdd">
+                        <span class="match-time">10:00–12:30</span>
+                        <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">SDD</span></div>
+                        <span class="match-group">(Group D)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="ds_vs_nz">
+                        <span class="match-time">12:30–03:00</span>
+                        <div class="match-teams"><span class="team-b">Dhaka South Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
+                        <span class="match-group">(Group B)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Fri 14 Nov 2025</div>
+                    <div class="fixture-match-item" data-match-ref="tr_vs_cam">
+                        <span class="match-time">07:30–10:00</span>
+                        <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
+                        <span class="match-group">(Group C)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="sdd_vs_p">
+                        <span class="match-time">10:00–12:30</span>
+                        <div class="match-teams"><span class="team-d">SDD</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
+                        <span class="match-group">(Group D)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="dc_vs_nz">
+                        <span class="match-time">12:30–03:00</span>
+                        <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
+                        <span class="match-group">(Group B)</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <h4 class="fixture-knockout-header">Knockout stage — 7 matches</h4>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Sat 15 Nov 2025 — Quarterfinals</div>
+                    <div class="fixture-match-item" data-match-ref="qf1">
+                        <span class="match-time">08:00–11:30</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">QF1</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="qf2">
+                        <span class="match-time">11:30–03:00</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">QF2</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Fri 21 Nov 2025 — Quarterfinals</div>
+                    <div class="fixture-match-item" data-match-ref="qf4">
+                        <span class="match-time">08:00–11:30</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">QF4</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="qf3">
+                        <span class="match-time">11:30–03:00</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">QF3</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Sat 22 Nov 2025 — Semifinals</div>
+                    <div class="fixture-match-item" data-match-ref="sf1">
+                        <span class="match-time">08:00–11:30</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">SF1</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                    <div class="fixture-match-item" data-match-ref="sf2">
+                        <span class="match-time">11:30–03:00</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">SF2</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <div class="fixture-day-card">
+                    <div class="fixture-day-header">Sat 28 Nov 2025 — Final</div>
+                    <div class="fixture-match-item" data-match-ref="final">
+                        <span class="match-time">09:00–03:00</span>
+                        <div class="match-teams">
+                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                        </div>
+                        <span class="match-group">Final</span>
+                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                    </div>
+                </div>
+                <p class="disclaimer">***Schedule may be changed based on different circumstances***</p>
+                <button class="points-save-btn" id="saveFixturesBtn" style="margin-top: 20px;">Save Fixtures</button>
+            </div>
+            <div class="modal-overlay" id="squadModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalTeamName">Player List</h3>
+                        <span class="modal-close">×</span>
+                    </div>
+                    <div id="modal-body-content"></div>
+                    <div class="modal-footer">
+                        <button class="btn add-player-btn" id="addPlayerBtn">Add Player</button>
+                        <button class="btn save-btn" id="saveSquadBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase SDK functions আমদানি করুন
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        // আপনার দেওয়া Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWGHs6f3-m0sWt9p2WfbqojEh7DZzmdys",
+            authDomain: "cricket-carnival-2025.firebaseapp.com",
+            databaseURL: "https://cricket-carnival-2025-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "cricket-carnival-2025",
+            storageBucket: "cricket-carnival-2025.appspot.com",
+            messagingSenderId: "669183768621",
+            appId: "1:669183768621:web:a284feab1070999525e0a4"
+        };
+        
+        // Firebase চালু করুন
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const dbRef = ref(getDatabase());
+
+        // Global variables
+        let scorecardData = {};
+        let squadData = {};
+        let pointsTableData = {};
+        let fixtureCustomData = {};
+        let currentMatchRef = null;
+        
+        const defaultSquadData = {
+            "Corporate_Credit": Array.from({length: 11}, (_, i) => ({ name: `CC Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cc${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Card_Operation": Array.from({length: 11}, (_, i) => ({ name: `CO Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=co${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Wicket-keeper' : 'All-rounder')) })),
+            "ICT_Operation": Array.from({length: 11}, (_, i) => ({ name: `ICT Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=ict${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'Extra')) })),
+            "Dhaka_South_Zone": Array.from({length: 11}, (_, i) => ({ name: `DSZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dsz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Narayangonj_Zone": Array.from({length: 11}, (_, i) => ({ name: `NZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=nz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Dhaka_Central_Zone": Array.from({length: 11}, (_, i) => ({ name: `DCZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dcz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Treasury": Array.from({length: 11}, (_, i) => ({ name: `Treasury Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=tr${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Card_Business": Array.from({length: 11}, (_, i) => ({ name: `CB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "CAM_RD_Division": Array.from({length: 11}, (_, i) => ({ name: `CAM Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cam${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "ID_Division": Array.from({length: 11}, (_, i) => ({ name: `ID Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=id${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "SDD_Division": Array.from({length: 11}, (_, i) => ({ name: `SDD Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=sdd${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Principal_Branch": Array.from({length: 11}, (_, i) => ({ name: `PB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=pb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+        };
+
+        function saveMatchData(matchRef, data) {
+            if (!matchRef || !data) return;
+            const firebaseMatchRef = ref(database, `scorecardData/${matchRef}`);
+            set(firebaseMatchRef, data)
+                .then(() => console.log(`'${matchRef}' ম্যাচটি Firebase-এ সফলভাবে সেভ হয়েছে।`))
+                .catch(error => console.error("Firebase সেভ করতে সমস্যা:", error));
+            try {
+                localStorage.setItem(`scorecard_${matchRef}`, JSON.stringify(data));
+                console.log(`'${matchRef}' ম্যাচটি Local Storage-এ সফলভাবে সেভ হয়েছে।`);
+            } catch (e) {
+                console.error("Local Storage সেভ করতে সমস্যা:", e);
+            }
+        }
+
+        async function loadMatchData(matchRef) {
+            if (!matchRef) return null;
+            const localData = localStorage.getItem(`scorecard_${matchRef}`);
+            if (localData) {
+                console.log(`'${matchRef}' ম্যাচটি Local Storage থেকে লোড হয়েছে।`);
+                try {
+                    return JSON.parse(localData);
+                } catch (e) {
+                    console.error("Local Storage থেকে ডেটা পার্স করতে সমস্যা:", e);
+                    localStorage.removeItem(`scorecard_${matchRef}`);
+                }
+            }
+            try {
+                const firebaseMatchRef = ref(database, `scorecardData/${matchRef}`);
+                const snapshot = await get(firebaseMatchRef);
+                if (snapshot.exists()) {
+                    console.log(`'${matchRef}' ম্যাচটি Firebase থেকে লোড হয়েছে।`);
+                    const firebaseData = snapshot.val();
+                    localStorage.setItem(`scorecard_${matchRef}`, JSON.stringify(firebaseData));
+                    return firebaseData;
+                } else {
+                    console.log(`'${matchRef}' ম্যাচের জন্য কোনো ডেটা পাওয়া যায়নি।`);
+                    return null;
+                }
+            } catch (error) {
+                console.error("Firebase থেকে ডেটা লোড করতে সমস্যা:", error);
+                return null;
+            }
+        }
+        
+        function loadInitialData() {
+            get(dbRef).then((snapshot) => {
+              if (snapshot.exists()) {
+                const data = snapshot.val();
+                squadData = data.squadData || defaultSquadData;
+                pointsTableData = data.pointsTable || {};
+                fixtureCustomData = data.fixtureCustomData || {};
+                console.log("Initial admin data loaded from Firebase.");
+                populatePointsTable();
+                populateFixtures();
+                updateMainDropdown();
+              } else {
+                console.log("No data available in Firebase, using defaults.");
+                squadData = defaultSquadData;
+              }
+            }).catch((error) => {
+              console.error("Firebase load error:", error);
+              squadData = defaultSquadData;
+            });
+        }
+        
+        function saveAndRender(matchRef, team1, team2) {
+            if (scorecardData[matchRef]) {
+                saveMatchData(matchRef, scorecardData[matchRef]);
+            }
+            renderScorecard(matchRef, team1, team2);
+            if (document.getElementById('live-panel').style.display !== 'none') {
+                renderLiveScore(matchRef);
+            }
+        }
+        
+        window.saveScorecard = function() {
+            if (currentMatchRef && scorecardData[currentMatchRef]) {
+                saveMatchData(currentMatchRef, scorecardData[currentMatchRef]);
+                alert("Scorecard data saved successfully!");
+            } else {
+                alert("No match selected to save.");
+            }
+        }
+
+        window.resetScorecard = function() {
+            if (confirm("Are you sure you want to reset all data for this match? This cannot be undone.")) {
+                const matchInfo = getMatchInfo();
+                if(matchInfo) {
+                    delete scorecardData[matchInfo.matchRef];
+                    localStorage.removeItem(`scorecard_${matchInfo.matchRef}`);
+                    const firebaseMatchRef = ref(database, `scorecardData/${matchInfo.matchRef}`);
+                    remove(firebaseMatchRef).then(() => {
+                        console.log("Firebase data for the match has been removed.");
+                    });
+                    renderScorecard(matchInfo.matchRef, matchInfo.team1, matchInfo.team2);
+                    alert("Match data has been reset.");
+                }
+            }
+        }
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const loginCode = document.getElementById('loginCode').value;
+            const messageDiv = document.getElementById('message');
+            const loginContainer = document.getElementById('loginContainer');
+            const welcomeScreen = document.getElementById('post-login-welcome');
+            if (loginCode === 'carnival') {
+                loginContainer.classList.add('hidden');
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        welcomeScreen.classList.add('visible');
+                    }, 50);
+                }, 500);
+                setTimeout(function() {
+                    loginContainer.style.display = 'none';
+                    welcomeScreen.style.display = 'none';
+                    document.getElementById('mainAppContainer').style.display = 'block';
+                    document.body.style.background = '#f7f8f8';
+                    document.body.style.animation = 'none';
+                    document.body.style.justifyContent = 'flex-start';
+                    document.body.style.alignItems = 'flex-start';
+                    loadInitialData();
+                }, 3000); 
+            } else {
+                messageDiv.textContent = 'Invalid login code. Please try again.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                const inputField = document.getElementById('loginCode');
+                inputField.value = '';
+                inputField.focus();
+                loginContainer.animate([
+                    { transform: 'translateX(0)' }, { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' }, { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' }, { transform: 'translateX(0)' }
+                ], { duration: 500, easing: 'ease-in-out' });
+            }
+        });
+
+        const teamNameList = [ "Corporate Credit", "Card Operation", "ICT Operation", "Dhaka South Zone", "Narayangonj Zone", "Dhaka Central Zone", "Treasury", "Card Business", "CAM & RD", "ID", "SDD", "Principal" ];
+        const positions = ["Batsman", "Bowler", "All-rounder", "Wicket-keeper", "Captain", "Extra"];
+        const reverseTeamNameMap = {
+            "Corporate Credit": "Corporate_Credit", "Card Operation": "Card_Operation", "ICT Operation": "ICT_Operation",
+            "Dhaka South Zone": "Dhaka_South_Zone", "Narayangonj Zone": "Narayangonj_Zone", "Dhaka Central Zone": "Dhaka_Central_Zone",
+            "Treasury": "Treasury", "Card Business": "Card_Business", "CAM & RD": "CAM_RD_Division",
+            "ID": "ID_Division", "SDD": "SDD_Division", "Principal": "Principal_Branch"
+        };
+        const fixtureData = [
+            { matchRef: 'id_vs_principal', match: "ID vs Principal (Group D)", date: "Sat 1 Nov 2025", time: "07:30–10:00" },
+            { matchRef: 'cc_vs_co', match: "Corporate Credit vs Card Operation (Group A)", date: "Sat 1 Nov 2025", time: "10:00–12:30" },
+            { matchRef: 'tr_vs_cb', match: "Treasury vs Card Business (Group C)", date: "Sat 1 Nov 2025", time: "12:30–03:00" },
+            { matchRef: 'dc_vs_ds', match: "Dhaka Central Zone vs Dhaka South Zone (Group B)", date: "Fri 7 Nov 2025", time: "07:30–10:00" },
+            { matchRef: 'co_vs_ict', match: "Card Operation vs ICT Operation (Group A)", date: "Fri 7 Nov 2025", time: "10:00–12:30" },
+            { matchRef: 'cb_vs_cam', match: "Card Business vs CAM & RD (Group C)", date: "Fri 7 Nov 2025", time: "12:30–03:00" },
+            { matchRef: 'cc_vs_ict', match: "Corporate Credit vs ICT Operation (Group A)", date: "Sat 8 Nov 2025", time: "07:30–10:00" },
+            { matchRef: 'id_vs_sdd', match: "ID vs SDD (Group D)", date: "Sat 8 Nov 2025", time: "10:00–12:30" },
+            { matchRef: 'ds_vs_nz', match: "Dhaka South Zone vs Narayangonj Zone (Group B)", date: "Sat 8 Nov 2025", time: "12:30–03:00" },
+            { matchRef: 'tr_vs_cam', match: "Treasury vs CAM & RD (Group C)", date: "Fri 14 Nov 2025", time: "07:30–10:00" },
+            { matchRef: 'sdd_vs_p', match: "SDD vs Principal (Group D)", date: "Fri 14 Nov 2025", time: "10:00–12:30" },
+            { matchRef: 'dc_vs_nz', match: "Dhaka Central Zone vs Narayangonj Zone (Group B)", date: "Fri 14 Nov 2025", time: "12:30–03:00" },
+            { matchRef: 'qf1', match: "QF1: Winner A vs Runner-up C", date: "Sat 15 Nov 2025", time: "08:00–11:30" },
+            { matchRef: 'qf2', match: "QF2: Winner C vs Runner-up A", date: "Sat 15 Nov 2025", time: "11:30–03:00" },
+            { matchRef: 'qf4', match: "QF4: Winner D vs Runner-up B", date: "Fri 21 Nov 2025", time: "08:00–11:30" },
+            { matchRef: 'qf3', match: "QF3: Winner B vs Runner-up D", date: "Fri 21 Nov 2025", time: "11:30–03:00" },
+            { matchRef: 'sf1', match: "SF1: Winner QF2 vs Winner QF4", date: "Sat 22 Nov 2025", time: "08:00–11:30" },
+            { matchRef: 'sf2', match: "SF2: Winner QF1 vs Winner QF3", date: "Sat 22 Nov 2025", time: "11:30–03:00" },
+            { matchRef: 'final', match: "Final: Winner SF1 vs Winner SF2", date: "Sat 28 Nov 2025", time: "09:00–03:00" },
+        ];
+    
+        const tabs = document.querySelectorAll('[role="tab"]');
+        const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+        const tabList = document.querySelector('[role="tablist"]');
+        function switchTab(newTab) {
+          const targetPanelId = newTab.getAttribute('aria-controls');
+          tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
+          newTab.classList.add('active'); newTab.setAttribute('aria-selected', 'true'); newTab.removeAttribute('tabindex');
+          tabPanels.forEach(p => { p.id === targetPanelId ? p.classList.remove('hidden') : p.classList.add('hidden'); });
+        }
+        tabs.forEach(tab => { tab.addEventListener('click', e => { switchTab(e.currentTarget); }); });
+    
+        const dropdownBtn = document.getElementById("dropdownBtn");
+        const dropdownContent = document.getElementById("myDropdown");
+        const selectedMatchSpan = document.getElementById("selectedMatch");
+        const infoPanel = document.getElementById('info-panel');
+        const dateTimeElement = document.getElementById('matchDateTime'); 
+    
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownContent.classList.toggle("show");
+        });
+    
+        function displayPlayingXI(team1Key, team2Key, team1Name, team2Name) {
+            const team1Players = squadData[team1Key] || [];
+            const team2Players = squadData[team2Key] || [];
+            let finalHtml = '<h3>Playing XI</h3><div class="playing-xi-container">';
+            finalHtml += `<div class="team-column"><h4 class="team-name-header">${team1Name}</h4><ul class="player-list">`;
+            team1Players.forEach(player => { finalHtml += `<li><img src="${player.photoUrl}" alt="${player.name}" class="player-photo-small"><div class="player-details"><span class="player-name">${player.name}</span><span class="player-role">${player.position}</span></div></li>`; });
+            finalHtml += `</ul></div>`;
+            finalHtml += `<div class="team-column"><h4 class="team-name-header">${team2Name}</h4><ul class="player-list">`;
+            team2Players.forEach(player => { finalHtml += `<li><img src="${player.photoUrl}" alt="${player.name}" class="player-photo-small"><div class="player-details"><span class="player-name">${player.name}</span><span class="player-role">${player.position}</span></div></li>`; });
+            finalHtml += `</ul></div></div>`;
+            infoPanel.innerHTML = finalHtml;
+        }
+    
+        dropdownContent.addEventListener('click', async (event) => {
+            if (event.target.tagName === 'A') {
+                event.preventDefault();
+                dropdownContent.classList.remove('show');
+                const matchText = event.target.getAttribute('data-match');
+                const matchRef = event.target.getAttribute('data-match-ref');
+                currentMatchRef = matchRef;
+                const team1Name = matchText.split(' vs ')[0].trim().replace(/QF\d: |SF\d: |Final: /, '');
+                const team2Name = matchText.split(' vs ')[1].split(' (')[0].trim();
+                const fixture = fixtureData.find(f => f.matchRef === matchRef);
+                dateTimeElement.innerHTML = fixture ? `<strong>Date & Time:</strong> ${fixture.date}, ${fixture.time} LOCAL` : `<strong>Date & Time:</strong> TBD`;
+                selectedMatchSpan.textContent = matchText;
+                const teams = matchText.replace(/QF\d: |SF\d: |Final: /, '').split(' vs ');
+                if (teams.length === 2) {
+                    const team1 = teams[0].trim();
+                    const team2 = teams[1].split("(")[0].trim();
+                    const loadedData = await loadMatchData(matchRef);
+                    if (loadedData) {
+                        scorecardData[matchRef] = loadedData;
+                    }
+                    renderScorecard(matchRef, team1, team2);
+                    renderLiveScore(matchRef);
+                    if(teamNameList.includes(team1) && teamNameList.includes(team2)) {
+                        const team1Key = reverseTeamNameMap[team1];
+                        const team2Key = reverseTeamNameMap[team2];
+                        if (team1Key && team2Key) {
+                            displayPlayingXI(team1Key, team2Key, team1Name, team2Name);
+                        }
+                    } else {
+                        infoPanel.innerHTML = `<h3>Match Info</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
+                         document.getElementById("scorecardContent").innerHTML = `<h3>Scorecard</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
+                         document.getElementById("live-panel").innerHTML = `<h3>Live Score</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
+                    }
+                }
+            }
+        });
+
+        window.addEventListener('click', () => { if (dropdownContent.classList.contains('show')) { dropdownContent.classList.remove('show'); } });
+    
+        const modal = document.getElementById('squadModal');
+        const modalTeamName = document.getElementById('modalTeamName');
+        const modalBody = document.getElementById('modal-body-content');
+        const closeModalBtn = document.querySelector('.modal-close');
+        const squadLinks = document.querySelectorAll('.squad-item');
+        const saveSquadBtn = document.getElementById('saveSquadBtn');
+        const addPlayerBtn = document.getElementById('addPlayerBtn');
+    
+        function createPlayerTable(teamId) {
+            const teamName = teamId.replace(/_/g, ' ');
+            const players = squadData[teamId] || [];
+            modalTeamName.textContent = `${teamName} - Player List`;
+            modal.dataset.teamId = teamId;
+            if (!players) { modalBody.innerHTML = `<p>Player data not available.</p>`; return; }
+            let tableHtml = `<table class="player-table"><thead><tr><th>Photo</th><th>Name</th><th>Position</th></tr></thead><tbody>`;
+            players.forEach(player => {
+                tableHtml += `<tr><td><img src="${player.photoUrl}" alt="${player.name}" class="player-photo editable-photo"></td><td class="editable-name">${player.name}</td><td class="editable-position">${player.position}</td></tr>`;
+            });
+            tableHtml += `</tbody></table>`;
+            modalBody.innerHTML = tableHtml;
+        }
+        squadLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                createPlayerTable(this.dataset.team);
+                modal.style.display = 'block';
+                saveSquadBtn.style.display = 'none';
+            });
+        });
+        
+        addPlayerBtn.addEventListener('click', function() {
+            const tableBody = modalBody.querySelector('tbody');
+            if (tableBody) {
+                const newRow = tableBody.insertRow();
+                newRow.innerHTML = `<td><img src="https://i.pravatar.cc/50?u=new${Date.now()}" alt="New Player" class="player-photo editable-photo"></td><td class="editable-name">New Player</td><td class="editable-position">Batsman</td>`;
+                saveSquadBtn.style.display = 'block';
+            }
+        });
+        
+        saveSquadBtn.addEventListener('click', function() {
+            const teamId = modal.dataset.teamId;
+            const rows = modalBody.querySelectorAll('tbody tr');
+            const newPlayers = [];
+            rows.forEach(row => {
+                newPlayers.push({
+                    name: row.cells[1].textContent,
+                    photoUrl: row.cells[0].querySelector('img').src,
+                    position: row.cells[2].textContent
+                });
+            });
+            squadData[teamId] = newPlayers;
+            set(ref(database, 'squadData'), squadData).then(() => {
+                alert('Changes have been saved successfully to Firebase!');
+                modal.style.display = 'none';
+            }).catch(error => {
+                console.error("Error saving squad data: ", error);
+                alert('Error saving data. Check console.');
+            });
+        });
+        
+        modalBody.addEventListener('click', function(e) {
+            const target = e.target;
+            if (target.tagName === 'INPUT' || target.tagName === 'SELECT') return;
+            saveSquadBtn.style.display = 'block';
+            if (target.classList.contains('editable-photo')) {
+                const currentUrl = target.src;
+                const newUrl = prompt("Enter new image URL:", currentUrl);
+                if (newUrl && newUrl.trim() !== '' && newUrl !== currentUrl) {
+                    target.src = newUrl;
+                }
+            }
+            if (target.classList.contains('editable-name')) {
+                const currentName = target.textContent;
+                target.innerHTML = `<input type="text" value="${currentName}" />`;
+                const input = target.querySelector('input');
+                input.focus();
+                input.addEventListener('blur', () => {
+                    target.textContent = input.value.trim() || currentName;
+                });
+                input.addEventListener('keydown', (event) => { if (event.key === 'Enter') input.blur(); });
+            }
+            if (target.classList.contains('editable-position')) {
+                const currentPosition = target.textContent;
+                let selectHtml = `<select>`;
+                positions.forEach(pos => {
+                    selectHtml += `<option value="${pos}" ${pos === currentPosition ? 'selected' : ''}>${pos}</option>`;
+                });
+                selectHtml += `</select>`;
+                target.innerHTML = selectHtml;
+                const select = target.querySelector('select');
+                select.focus();
+                select.addEventListener('blur', () => {
+                    target.textContent = select.value;
+                });
+                select.addEventListener('change', () => select.blur());
+            }
+        });
+    
+        closeModalBtn.onclick = function() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+
+        function populatePointsTable() {
+            if (!pointsTableData || Object.keys(pointsTableData).length === 0) return;
+            document.querySelectorAll('.points-table-section h4').forEach(header => {
+                const groupName = header.dataset.groupName;
+                const groupData = pointsTableData[groupName];
+                if (!groupData) return;
+                const table = header.nextElementSibling;
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const teamName = row.cells[0].dataset.teamName;
+                    const teamData = groupData.find(t => t.team === teamName);
+                    if (teamData) {
+                        row.cells[1].querySelector('select').value = teamData.M;
+                        row.cells[2].querySelector('select').value = teamData.W;
+                        row.cells[3].querySelector('select').value = teamData.L;
+                        row.cells[4].querySelector('select').value = teamData.Pts;
+                        row.cells[5].querySelector('input').value = teamData.NRR;
+                    }
+                });
+            });
+            if (pointsTableData.knockoutSelections) {
+                for (const key in pointsTableData.knockoutSelections) {
+                    const selectEl = document.getElementById(key);
+                    if (selectEl) {
+                        selectEl.value = pointsTableData.knockoutSelections[key];
+                    }
+                }
+            }
+        }
+
+        function populateFixtures() {
+            if (!fixtureCustomData || Object.keys(fixtureCustomData).length === 0) return;
+            document.querySelectorAll('.fixture-match-item').forEach(item => {
+                const matchRef = item.dataset.matchRef;
+                const matchData = fixtureCustomData[matchRef];
+                if (matchData) {
+                    const notesEl = item.querySelector('.match-notes');
+                    if (notesEl) notesEl.textContent = matchData.notes || '';
+                    const selects = item.querySelectorAll('.fixture-knockout-select');
+                    if (selects.length === 2) {
+                        selects[0].value = matchData.team1 || '';
+                        selects[1].value = matchData.team2 || '';
+                    }
+                }
+            });
+        }
+        
+        document.getElementById('savePointsBtn').addEventListener('click', () => {
+            const dataToSave = {};
+            document.querySelectorAll('.points-table-section h4').forEach(header => {
+                const groupName = header.dataset.groupName;
+                const table = header.nextElementSibling;
+                const rows = table.querySelectorAll('tbody tr');
+                const groupData = [];
+                rows.forEach(row => {
+                    groupData.push({
+                        team: row.cells[0].dataset.teamName,
+                        M: row.cells[1].querySelector('select').value,
+                        W: row.cells[2].querySelector('select').value,
+                        L: row.cells[3].querySelector('select').value,
+                        Pts: row.cells[4].querySelector('select').value,
+                        NRR: row.cells[5].querySelector('input').value,
+                    });
+                });
+                dataToSave[groupName] = groupData;
+            });
+            dataToSave.knockoutSelections = {};
+            document.querySelectorAll('.knockout-selector select').forEach(select => {
+                dataToSave.knockoutSelections[select.id] = select.value;
+            });
+            set(ref(database, 'pointsTable'), dataToSave).then(() => {
+                alert('Points Table saved to Firebase successfully!');
+                pointsTableData = dataToSave;
+            }).catch(error => console.error("Error saving points table:", error));
+        });
+
+        document.getElementById('saveFixturesBtn').addEventListener('click', () => {
+            const dataToSave = {};
+            document.querySelectorAll('.fixture-match-item').forEach(item => {
+                const matchRef = item.dataset.matchRef;
+                if (!matchRef) return;
+                const notes = item.querySelector('.match-notes')?.textContent || '';
+                const selects = item.querySelectorAll('.fixture-knockout-select');
+                dataToSave[matchRef] = { notes: notes };
+                if (selects.length === 2) {
+                    dataToSave[matchRef].team1 = selects[0].value;
+                    dataToSave[matchRef].team2 = selects[1].value;
+                }
+            });
+            set(ref(database, 'fixtureCustomData'), dataToSave).then(() => {
+                alert('Fixtures data saved to Firebase successfully!');
+                fixtureCustomData = dataToSave;
+            }).catch(error => console.error("Error saving fixtures:", error));
+        });
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const teamOptions = ["", ...teamNameList];
+            function populateSelect(selectElement, placeholder) {
+                selectElement.innerHTML = '';
+                teamOptions.forEach((teamName, index) => {
+                    const option = document.createElement('option');
+                    option.value = teamName;
+                    if (index === 0) {
+                        option.textContent = placeholder || '-- Select Team --';
+                    } else {
+                        option.textContent = teamName;
+                    }
+                    selectElement.appendChild(option);
+                });
+            }
+            const knockoutSelects = document.querySelectorAll('.knockout-selector select');
+            knockoutSelects.forEach(select => {
+                populateSelect(select, select.dataset.placeholder);
+                select.addEventListener('change', updateMainDropdown);
+            });
+            const fixtureKnockoutSelects = document.querySelectorAll('.fixture-knockout-select');
+            fixtureKnockoutSelects.forEach(select => {
+                populateSelect(select);
+            });
+        });
+        
+        function updateMainDropdown() {
+             const knockoutMapping = {
+                qf1: { link: document.querySelector('a[data-match-ref="qf1"]'), prefix: 'QF1: ', t1: 'k_qf1_t1', t2: 'k_qf1_t2'},
+                qf2: { link: document.querySelector('a[data-match-ref="qf2"]'), prefix: 'QF2: ', t1: 'k_qf2_t1', t2: 'k_qf2_t2'},
+                qf3: { link: document.querySelector('a[data-match-ref="qf3"]'), prefix: 'QF3: ', t1: 'k_qf3_t1', t2: 'k_qf3_t2'},
+                qf4: { link: document.querySelector('a[data-match-ref="qf4"]'), prefix: 'QF4: ', t1: 'k_qf4_t1', t2: 'k_qf4_t2'},
+                sf1: { link: document.querySelector('a[data-match-ref="sf1"]'), prefix: 'SF1: ', t1: 'k_sf1_t1', t2: 'k_sf1_t2'},
+                sf2: { link: document.querySelector('a[data-match-ref="sf2"]'), prefix: 'SF2: ', t1: 'k_sf2_t1', t2: 'k_sf2_t2'},
+                final: { link: document.querySelector('a[data-match-ref="final"]'), prefix: 'Final: ', t1: 'k_final_t1', t2: 'k_final_t2'},
+            };
+            for (const key in knockoutMapping) {
+                const match = knockoutMapping[key];
+                const select1 = document.getElementById(match.t1);
+                const select2 = document.getElementById(match.t2);
+                if (!select1 || !select2) continue;
+                const team1 = select1.value || select1.dataset.placeholder;
+                const team2 = select2.value || select2.dataset.placeholder;
+                const newText = `${match.prefix}${team1} vs ${team2}`;
+                match.link.textContent = newText;
+                match.link.setAttribute('data-match', newText);
+            }
+        }
+      
+        function getMatchInfo() {
+          if (!currentMatchRef) return null;
+          const matchLink = document.querySelector(`#myDropdown a[data-match-ref="${currentMatchRef}"]`);
+          if (!matchLink) return null;
+          const matchText = matchLink.getAttribute('data-match');
+          const teams = matchText.replace(/QF\d: |SF\d: |Final: /, '').split(' vs ');
+          if (teams.length < 2) return null;
+          return {
+              matchRef: currentMatchRef,
+              team1: teams[0].trim(),
+              team2: teams[1].split("(")[0].trim()
+          };
+        }
+      
+        // ================================================
+        // ## নতুন ফাংশন এবং পরিবর্তিত ফাংশন ##
+        // ================================================
+
+        window.saveCurrentBowler = function(matchRef, bowlingTeam) {
+            const safeBowlingTeam = bowlingTeam.replace(/\s+/g, '-');
+            const selector = document.getElementById(`current-bowler-${matchRef}-${safeBowlingTeam}`);
+            const bowlerIndex = selector.value;
+            if (scorecardData[matchRef] && scorecardData[matchRef][bowlingTeam]) {
+                scorecardData[matchRef][bowlingTeam].currentBowlerIndex = bowlerIndex;
+                const matchInfo = getMatchInfo();
+                saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+            }
+        };
+
+        window.incrementStat = function(matchRef, team, batsmanIndex, stat) {
+            const batsman = scorecardData[matchRef][team].batting[batsmanIndex];
+            batsman[stat] = (batsman[stat] || 0) + 1;
+
+            // যদি রান বৃদ্ধি পায়, বর্তমান বোলারের রানও বৃদ্ধি করুন
+            if (stat === 'runs') {
+                const matchInfo = getMatchInfo();
+                const bowlingTeam = team === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
+                const currentBowlerIndex = scorecardData[matchRef][bowlingTeam].currentBowlerIndex;
+
+                if (currentBowlerIndex !== undefined && currentBowlerIndex !== "") {
+                    const bowler = scorecardData[matchRef][bowlingTeam].bowling[currentBowlerIndex];
+                    if(bowler) {
+                        bowler.runs = (bowler.runs || 0) + 1;
+                    }
+                }
+            }
+            const matchInfo = getMatchInfo();
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        };
+
+        window.incrementExtra = function(matchRef, team) {
+            scorecardData[matchRef][team].extraRuns = (scorecardData[matchRef][team].extraRuns || 0) + 1;
+            
+            // অতিরিক্ত রানের জন্যও বর্তমান বোলারের রান বৃদ্ধি করুন
+            const matchInfo = getMatchInfo();
+            const bowlingTeam = team === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
+            const currentBowlerIndex = scorecardData[matchRef][bowlingTeam].currentBowlerIndex;
+
+            if (currentBowlerIndex !== undefined && currentBowlerIndex !== "") {
+                const bowler = scorecardData[matchRef][bowlingTeam].bowling[currentBowlerIndex];
+                if(bowler) {
+                    bowler.runs = (bowler.runs || 0) + 1;
+                }
+            }
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        };
+        
+        function renderInnings(matchRef, battingTeam, bowlingTeam, inningsTitle, targetInfo = null) {
+            let html = ``;
+            if (targetInfo && !targetInfo.matchOver) {
+                html += `<div class="target-display">${targetInfo.team} needs ${targetInfo.runs} runs in ${targetInfo.balls} balls to win.</div>`;
+            }
+            html += `<h3>${inningsTitle} - ${battingTeam}</h3>`;
+            const matchData = scorecardData[matchRef];
+            html += `<table class="player-table">
+                <thead>
+                    <tr><th>Batsman</th><th>How Out</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>S/R</th><th>Actions</th></tr>
+                </thead><tbody>`;
+            matchData[battingTeam].batting.forEach((batsman, i) => {
+                const sr = batsman.balls > 0 ? ((batsman.runs / batsman.balls) * 100).toFixed(2) : "0.00";
+                const safeBattingTeam = battingTeam.replace(/\s+/g, '-');
+                html += `<tr class="${batsman.isOut ? 'batsman-out-row' : ''}">
+                    <td contenteditable="true" onblur="updateField('${matchRef}','${battingTeam}','batting',${i},'name',this.innerText)">${batsman.name}</td>
+                    <td contenteditable="true" onblur="updateField('${matchRef}','${battingTeam}','batting',${i},'howOut',this.innerText)">${batsman.howOut || ''}</td>
+                    <td>${batsman.runs}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'runs')">+</button></td>
+                    <td>${batsman.balls}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'balls')">+</button></td>
+                    <td>${batsman.fours}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'fours')">+</button></td>
+                    <td>${batsman.sixes}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'sixes')">+</button></td>
+                    <td><span id="sr-${matchRef}-${safeBattingTeam}-${i}">${sr}</span></td>
+                    <td>
+                      <div class="action-btn-group">
+                        ${!batsman.isOut ? `<button class="out-btn" onclick="markAsOut('${matchRef}','${battingTeam}',${i})">Out</button>` : ''}
+                        <button class="reset-btn" onclick="resetBatsman('${matchRef}','${battingTeam}', ${i})">Reset</button>
+                      </div>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody><tfoot>
+                <tr class="batting-summary-row">
+                    <td colspan="2">Extra</td>
+                    <td colspan="6">
+                      <span>${matchData[battingTeam].extraRuns || 0}</span>
+                      <button class="stat-increment-btn" onclick="incrementExtra('${matchRef}', '${battingTeam}')">+</button>
+                    </td>
+                </tr>
+                <tr class="batting-summary-row">
+                    <td colspan="2">Total Run</td>
+                    <td colspan="6" id="total-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0</td>
+                </tr>
+                <tr class="batting-summary-row">
+                    <td colspan="2">Overs</td>
+                    <td colspan="6" id="overs-wickets-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0.0 / 0</td>
+                </tr>
+            </tfoot></table>`;
+            
+            // বোলিং সেকশনের জন্য নতুন হেডার
+            const safeBowlingTeam = bowlingTeam.replace(/\s+/g, '-');
+            const currentBowlerIndex = matchData[bowlingTeam].currentBowlerIndex;
+            html += `<div class="bowling-section-header">
+                <h4>${bowlingTeam} Bowling</h4>
+                <div class="current-bowler-selector">
+                    <label for="current-bowler-${matchRef}-${safeBowlingTeam}">Current Bowler:</label>
+                    <select id="current-bowler-${matchRef}-${safeBowlingTeam}" onchange="saveCurrentBowler('${matchRef}', '${bowlingTeam}')">
+                        <option value="">-- Select --</option>
+                        ${matchData[bowlingTeam].bowling.map((b, i) => `<option value="${i}" ${currentBowlerIndex == i ? 'selected' : ''}>${b.name || 'New Bowler'}</option>`).join('')}
+                    </select>
+                </div>
+            </div>`;
+            
+            html += `<table class="player-table">
+                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th></th></tr></thead><tbody>`;
+            matchData[bowlingTeam].bowling.forEach((bowler, i) => {
+                html += `<tr>
+                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'name',this.innerText)">${bowler.name || 'New Bowler'}</td>
+                    <td><span>${bowler.overs || 0}</span><button class="stat-increment-btn" onclick="incrementOver('${matchRef}','${bowlingTeam}',${i})">+</button></td>
+                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'runs',this.innerText)">${bowler.runs || 0}</td>
+                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'wkts',this.innerText)">${bowler.wkts || 0}</td>
+                    <td><button class="delete-btn" onclick="deleteBowler('${matchRef}', '${bowlingTeam}', ${i})">Delete</button></td>
+                </tr>`;
+            });
+            html += `</tbody></table><button class="add-bowler-btn" onclick="addBowler('${matchRef}', '${bowlingTeam}')">Add Bowler</button>`;
+            return html;
+        }
+
+        // ================================================
+        // অপরিবর্তিত ফাংশনগুলো নিচে রয়েছে
+        // ================================================
+
+        window.saveTossAndReload = function() {
+          const matchInfo = getMatchInfo();
+          if (!matchInfo) return;
+          const tossWinner = document.getElementById(`toss-winner-${matchInfo.matchRef}`).value;
+          const decision = document.getElementById(`toss-decision-${matchInfo.matchRef}`).value;
+          scorecardData[matchInfo.matchRef].toss = { winner: tossWinner, decision: decision };
+          saveAndRender(matchInfo.matchRef, matchInfo.team1, matchInfo.team2);
+        }
+    
+        window.updateMatchOvers = function(matchRef) {
+          const matchInfo = getMatchInfo();
+          if (!matchInfo) return;
+          const overs = document.getElementById(`match-overs-${matchRef}`).value;
+          scorecardData[matchRef].totalOvers = parseInt(overs);
+          saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        }
+    
+        function updateTotal(matchRef, team) {
+          let totalRuns = calculateTeamTotal(matchRef, team);
+          const safeTeamName = team.replace(/\s+/g, '-');
+          const totalEl = document.getElementById(`total-${matchRef}-${safeTeamName}`);
+          if(totalEl) totalEl.innerText = totalRuns;
+        }
+      
+        function updateOversAndWickets(matchRef, battingTeam, bowlingTeam) {
+          const matchData = scorecardData[matchRef];
+          if (!matchData) return;
+          const wickets = matchData[battingTeam].batting.filter(p => p.isOut).length;
+          const totalBalls = calculateBallsBowled(matchRef, bowlingTeam);
+          const overs = `${Math.floor(totalBalls / 6)}.${totalBalls % 6}`;
+          const safeBattingTeam = battingTeam.replace(/\s+/g, '-');
+          const oversEl = document.getElementById(`overs-wickets-${matchRef}-${safeBattingTeam}`);
+          if(oversEl) oversEl.innerText = `${overs} / ${wickets}`;
+        }
+
+        window.markAsOut = function(matchRef, battingTeam, batsmanIndex) {
+          const matchInfo = getMatchInfo();
+          const bowlingTeam = battingTeam === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
+          const bowlers = scorecardData[matchRef][bowlingTeam].bowling;
+          let bowlerOptions = bowlers.map((b, i) => `${i}: ${b.name || 'Unnamed Bowler'}`).join('\n');
+          const bowlerIndexStr = prompt(`Who took the wicket?\n${bowlerOptions}`);
+          const bowlerIndex = parseInt(bowlerIndexStr);
+          if (bowlerIndexStr !== null && !isNaN(bowlerIndex) && bowlers[bowlerIndex]) {
+              bowlers[bowlerIndex].wkts = (bowlers[bowlerIndex].wkts || 0) + 1;
+              const howOut = prompt("How was the batsman out? (e.g., b bowler's name)");
+              scorecardData[matchRef][battingTeam].batting[batsmanIndex].isOut = true;
+              scorecardData[matchRef][battingTeam].batting[batsmanIndex].howOut = howOut || "out";
+              saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+          }
+        }
+    
+        window.resetBatsman = function(matchRef, team, batsmanIndex) {
+          if (confirm('Are you sure you want to reset this batsman?')) {
+            const batsman = scorecardData[matchRef][team].batting[batsmanIndex];
+            batsman.runs = 0;
+            batsman.balls = 0;
+            batsman.fours = 0;
+            batsman.sixes = 0;
+            batsman.isOut = false;
+            batsman.howOut = '';
+            const matchInfo = getMatchInfo();
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+          }
+        }
+    
+        function renderScorecard(matchRef, team1, team2) {
+            currentMatchRef = matchRef;
+            if (!scorecardData[matchRef]) {
+                scorecardData[matchRef] = {
+                    [team1]: { batting: Array.from({length: 11}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
+                    [team2]: { batting: Array.from({length: 11}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
+                    toss: { winner: team1, decision: 'bat' },
+                    totalOvers: 10
+                };
+            }
+            const matchData = scorecardData[matchRef];
+            const toss = matchData.toss;
+            let html = `<div class="toss-section">
+                <label for="toss-winner-${matchRef}">Toss Won By:</label>
+                <select id="toss-winner-${matchRef}" onchange="saveTossAndReload()">
+                    <option value="${team1}" ${toss.winner === team1 ? 'selected' : ''}>${team1}</option>
+                    <option value="${team2}" ${toss.winner === team2 ? 'selected' : ''}>${team2}</option>
+                </select>
+                <label for="toss-decision-${matchRef}">Decision:</label>
+                <select id="toss-decision-${matchRef}" onchange="saveTossAndReload()">
+                    <option value="bat" ${toss.decision === 'bat' ? 'selected' : ''}>Bat</option>
+                    <option value="bowl" ${toss.decision === 'bowl' ? 'selected' : ''}>Bowl</option>
+                </select>
+            </div>`;
+            html += `<div class="scorecard-settings">
+                <label for="match-overs-${matchRef}">Match Overs:</label>
+                <select id="match-overs-${matchRef}" onchange="updateMatchOvers('${matchRef}')">
+                    ${Array.from({length: 20}, (_, i) => `<option value="${i+1}" ${matchData.totalOvers == i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
+                </select>
+            </div>`;
+            const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
+            const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
+            const { targetInfo } = calculateResult(matchRef);
+            html += renderInnings(matchRef, firstInningsTeam, secondInningsTeam, '1st Innings');
+            html += renderInnings(matchRef, secondInningsTeam, firstInningsTeam, '2nd Innings', targetInfo);
+            html += `<div class="scorecard-actions">
+              <button class="btn save-score-btn" onclick="saveScorecard()">Save Scorecard</button>
+              <button class="btn reset-match-btn" onclick="resetScorecard()">Reset Match Data</button>
+            </div>`;
+            document.getElementById("scorecardContent").innerHTML = html;
+            updateTotal(matchRef, team1);
+            updateTotal(matchRef, team2);
+            updateOversAndWickets(matchRef, firstInningsTeam, secondInningsTeam);
+            updateOversAndWickets(matchRef, secondInningsTeam, firstInningsTeam);
+        }
+    
+        function calculateResult(matchRef) {
+            const matchInfo = getMatchInfo();
+            if (!matchInfo || !scorecardData[matchRef]) return { resultText: null, targetInfo: null };
+            const { team1, team2 } = matchInfo;
+            const matchData = scorecardData[matchRef];
+            const toss = matchData.toss;
+            const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
+            const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
+            const totalBallsForMatch = (matchData.totalOvers || 10) * 6;
+            const score1 = calculateTeamTotal(matchRef, firstInningsTeam);
+            const score2 = calculateTeamTotal(matchRef, secondInningsTeam);
+            const balls2 = calculateBallsBowled(matchRef, firstInningsTeam);
+            const wickets2 = matchData[secondInningsTeam].batting.filter(p => p.isOut).length;
+            const target = score1 + 1;
+            let resultText = null;
+            let matchOver = false;
+            if (score2 >= target) {
+                resultText = `${secondInningsTeam} won by ${11 - wickets2} wickets.`;
+                matchOver = true;
+            } else if (balls2 >= totalBallsForMatch || wickets2 === 11) {
+                if (score1 > score2) {
+                    resultText = `${firstInningsTeam} won by ${score1 - score2} runs.`;
+                } else if (score2 > score1) {
+                    resultText = `${secondInningsTeam} won by ${11 - wickets2} wickets.`;
+                } else {
+                    resultText = "Match Tied.";
+                }
+                matchOver = true;
+            }
+            const targetInfo = {
+                team: secondInningsTeam,
+                runs: Math.max(0, target - score2),
+                balls: Math.max(0, totalBallsForMatch - balls2),
+                matchOver: matchOver
+            };
+            return { resultText, targetInfo };
+        }
+    
+        function renderLiveScore(matchRef) {
+            const livePanel = document.getElementById('live-panel');
+            const matchInfo = getMatchInfo();
+            if (!matchInfo || !scorecardData[matchRef]) {
+                livePanel.innerHTML = `<h3>Live Score</h3><p>ম্যাচের তথ্য পাওয়া যায়নি।</p>`;
+                return;
+            }
+            const { team1, team2 } = matchInfo;
+            const matchData = scorecardData[matchRef];
+            const toss = matchData.toss;
+            const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
+            const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
+            let html = `<div class="live-score-container"><h3>${team1} vs ${team2}</h3>`;
+            html += `<div class="live-score-summary">${toss.winner} won the toss and chose to ${toss.decision}.</div>`;
+            const score1 = calculateTeamTotal(matchRef, firstInningsTeam);
+            const balls1 = calculateBallsBowled(matchRef, secondInningsTeam);
+            const overs1 = `${Math.floor(balls1 / 6)}.${balls1 % 6}`;
+            const wickets1 = matchData[firstInningsTeam].batting.filter(p => p.isOut).length;
+            html += `<div class="live-innings-card">
+                <div class="team-score">
+                    <span>${firstInningsTeam}</span>
+                    <span>${score1} / ${wickets1} <small>(${overs1})</small></span>
+                </div>
+            </div>`;
+            const balls2 = calculateBallsBowled(matchRef, firstInningsTeam);
+            const totalBallsForMatch = (matchData.totalOvers || 10) * 6;
+            const isSecondInnings = (balls1 >= totalBallsForMatch || wickets1 === 11 || balls2 > 0);
+            if (isSecondInnings) {
+                const score2 = calculateTeamTotal(matchRef, secondInningsTeam);
+                const overs2 = `${Math.floor(balls2 / 6)}.${balls2 % 6}`;
+                const wickets2 = matchData[secondInningsTeam].batting.filter(p => p.isOut).length;
+                const { targetInfo } = calculateResult(matchRef);
+                html += `<div class="live-innings-card">
+                    <div class="team-score">
+                        <span>${secondInningsTeam}</span>
+                        <span>${score2} / ${wickets2} <small>(${overs2})</small></span>
+                    </div>`;
+                if (targetInfo && !targetInfo.matchOver) {
+                    html += `<div class="target-display" style="margin-top: 15px;">Needs ${targetInfo.runs} runs in ${targetInfo.balls} balls.</div>`;
+                }
+                html += `</div>`;
+            }
+            const { resultText } = calculateResult(matchRef);
+            if (resultText) {
+                html += `<div class="match-result">${resultText}</div>`;
+            }
+            html += `</div>`;
+            livePanel.innerHTML = html;
+        }
+
+        window.incrementOver = function(matchRef, bowlingTeam, index) {
+            const bowler = scorecardData[matchRef][bowlingTeam].bowling[index];
+            let oversStr = String(bowler.overs || '0.0');
+            let parts = oversStr.split('.');
+            let fullOvers = parseInt(parts[0]) || 0;
+            let balls = parseInt(parts[1]) || 0;
+            if (balls < 5) {
+                balls++;
+            } else {
+                balls = 0;
+                fullOvers++;
+            }
+            bowler.overs = `${fullOvers}.${balls}`;
+            const matchInfo = getMatchInfo();
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        }
+      
+        window.addBowler = function(matchRef, bowlingTeam) {
+          const matchInfo = getMatchInfo();
+          scorecardData[matchRef][bowlingTeam].bowling.push({ name: 'New Bowler', overs: 0, runs: 0, wkts: 0 });
+          saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        }
+    
+        window.deleteBowler = function(matchRef, bowlingTeam, index) {
+          if (confirm('Are you sure you want to delete this bowler?')) {
+            scorecardData[matchRef][bowlingTeam].bowling.splice(index, 1);
+            const matchInfo = getMatchInfo();
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+          }
+        }
+    
+        window.updateField = function(matchRef, team, type, index, field, value) {
+          let numericValue = (field !== 'name' && field !== 'howOut' && field !== 'overs') ? parseFloat(value) || 0 : value;
+          scorecardData[matchRef][team][type][index][field] = numericValue;
+          const matchInfo = getMatchInfo();
+          saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        }
+    
+        function calculateTeamTotal(matchRef, team) {
+          const data = scorecardData[matchRef]?.[team];
+          if (!data) return 0;
+          let totalRuns = data.batting.reduce((acc, p) => acc + (p.runs || 0), 0);
+          totalRuns += data.extraRuns || 0;
+          return totalRuns;
+        }
+    
+        function calculateBallsBowled(matchRef, bowlingTeam) {
+          const data = scorecardData[matchRef]?.[bowlingTeam];
+          if (!data || !data.bowling) return 0;
+          return data.bowling.reduce((acc, b) => {
+              const oversStr = String(b.overs || '0.0');
+              const parts = oversStr.split('.');
+              const fullOvers = parseInt(parts[0], 10) || 0;
+              const balls = parseInt(parts[1], 10) || 0;
+              return acc + (fullOvers * 6) + balls;
+          }, 0);
+        }
+    </script>
+</body>
+</html>
