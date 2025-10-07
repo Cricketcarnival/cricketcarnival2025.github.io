@@ -3,33 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricket Carnival 2025 - Login</title>
+    <title>Cricket Carnival 2025 - Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         /* ================================================ */
-        /* শুধুমাত্র লগইন ইন্টারফেসের জন্য পরিবর্তিত CSS      */
+        /* Global Styles & Login Interface CSS              */
         /* ================================================ */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+        :root {
+            --green: #0f9d58;
+            --deep-green: #0b8450;
+            --muted: #9aa0a6;
+            --bg: #f7f8f8;
+            --card: #ffffff;
+            --light-gray: #efefef;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
         }
-        
+
         body {
-            /* একটি নতুন, পরিচ্ছন্ন ব্যাকগ্রাউন্ড */
             background: #eef5f3;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 0;
+            transition: background-color 0.5s;
         }
-        
+
+        /* Login Container Styles */
         .login-container {
-            /* নতুন কার্ড ডিজাইন */
             background: #ffffff;
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -40,7 +54,7 @@
             border: 1px solid #e0e0e0;
             transition: all 0.5s ease-in-out;
         }
-        
+
         .login-container.hidden {
             transform: scale(0.8);
             opacity: 0;
@@ -48,114 +62,191 @@
         }
 
         .logo-container { margin-bottom: 25px; }
-        .logo { 
-            width: 80px; 
-            height: 80px; 
-            margin: 0 auto 15px; 
-            background: linear-gradient(135deg, #00796b, #004d40); 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 121, 107, 0.3);
-        }
+        .logo { width: 80px; height: 80px; margin: 0 auto 15px; background: linear-gradient(135deg, #00796b, #004d40); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0, 121, 107, 0.3); }
         .logo svg { width: 45px; height: 45px; }
-        h1 { 
-            /* নতুন টেক্সট স্টাইল */
-            color: #1a202c; 
-            font-size: 28px; 
-            margin-bottom: 5px; 
-            font-weight: 700; 
-        }
-        .subtitle { 
-            color: #4a5568; 
-            font-size: 16px; 
-            margin-bottom: 30px; 
-            font-weight: 400; 
-        }
+        h1 { color: #1a202c; font-size: 28px; margin-bottom: 5px; font-weight: 700; }
+        .subtitle { color: #4a5568; font-size: 16px; margin-bottom: 30px; font-weight: 400; }
         .form-group { margin-bottom: 20px; text-align: left; }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            color: #2d3748; 
-            font-weight: 600; 
-            font-size: 14px; 
-        }
-        input[type="password"] { 
-            /* নতুন ইনপুট ফিল্ড ডিজাইন */
-            width: 100%; 
-            padding: 14px 18px; 
-            border: 1px solid #cbd5e0; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            transition: all 0.3s; 
-            background-color: #f7fafc; 
-            color: #2d3748; 
-        }
+        label { display: block; margin-bottom: 8px; color: #2d3748; font-weight: 600; font-size: 14px; }
+        input[type="password"] { width: 100%; padding: 14px 18px; border: 1px solid #cbd5e0; border-radius: 12px; font-size: 16px; transition: all 0.3s; background-color: #f7fafc; color: #2d3748; }
         input[type="password"]::placeholder { color: #a0aec0; }
-        input[type="password"]:focus { 
-            outline: none; 
-            border-color: #00796b; 
-            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); 
-            background-color: #ffffff;
-        }
-        .login-btn { 
-            /* নতুন বাটন ডিজাইন */
-            background: #00796b; 
-            color: #ffffff; 
-            border: none; 
-            border-radius: 12px; 
-            padding: 15px; 
-            width: 100%; 
-            font-size: 18px; 
-            font-weight: 700; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            margin-top: 10px; 
-        }
-        .login-btn:hover { 
-            background: #004d40;
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(0, 77, 64, 0.25); 
-        }
+        input[type="password"]:focus { outline: none; border-color: #00796b; box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); background-color: #ffffff; }
+        .login-btn { background: #00796b; color: #ffffff; border: none; border-radius: 12px; padding: 15px; width: 100%; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
+        .login-btn:hover { background: #004d40; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 77, 64, 0.25); }
         .message { margin-top: 20px; padding: 12px; border-radius: 8px; font-weight: 500; text-align: center; display: none; }
         .error { background-color: #ffebee; color: #c62828; }
 
-        /* Welcome Screen অপরিবর্তিত */
+        /* Welcome Screen */
         #post-login-welcome { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 10000; opacity: 0; transition: opacity 0.5s ease-in-out; }
         #post-login-welcome.visible { opacity: 1; }
         #post-login-welcome h1 { color: white; font-size: clamp(2.5em, 5vw, 4em); text-align: center; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: text-pop-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; transform: scale(0.8); opacity: 0; letter-spacing: 1px; }
         @keyframes text-pop-in { to { transform: scale(1); opacity: 1; } }
-
+        
         /* ================================================ */
-        /* মূল অ্যাপ্লিকেশনের CSS এখান থেকে অপরিবর্তিত রয়েছে  */
+        /* Main Application Layout & Sidebar CSS            */
         /* ================================================ */
-        :root{
-          --green:#0f9d58;
-          --deep-green:#0b8450;
-          --muted:#9aa0a6;
-          --bg:#f7f8f8;
-          --card:#ffffff;
-          --light-gray:#efefef;
+        
+        #mainAppContainer {
+            display: none;
+            width: 100%;
+            height: 100vh;
         }
-        .container{ max-width:1100px; margin:28px auto; padding:0 18px; }
-        .topbar{ background:linear-gradient(180deg,var(--green),var(--deep-green)); color:#fff;padding:20px 22px; border-radius:6px 6px 0 0; }
-        .top-title{ font-weight:600; font-size:18px; margin:0 0 6px; position: relative; }
-        .meta{ display:flex; gap:18px; font-size:13px; margin-bottom:12px; flex-wrap: wrap; }
-        .tabs{ display:flex; gap:22px; padding-top:12px; flex-wrap:wrap; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-        .tab{ padding:8px 2px; color:rgba(255,255,255,0.92); cursor:pointer; position:relative; background:none; border:none; font-family: inherit; font-size: 1em; }
-        .tab:focus { outline: 2px solid #fff; outline-offset: 4px; border-radius: 2px; }
-        .tab.active{ font-weight: 600; }
-        .tab.active::after{ content:""; position:absolute; left:0; right:0; height:3px; background:#fff; bottom:-13px; border-radius:2px; }
-        .card{ background:var(--card); border-radius:0 0 6px 6px; padding:18px 22px; box-shadow:0 6px 18px rgba(20,20,20,0.06); margin-top:0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
-        .card.hidden { display: none; }
-        .match-dropdown { position: relative; display: inline-block; }
-        .dropdown-toggle { background: none; border: none; color: white; font-size: 18px; font-weight: 600; cursor: pointer; padding: 5px; font-family: "Inter", sans-serif; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 110px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(17px);
+            -webkit-backdrop-filter: blur(17px);
+            border-right: 1px solid rgba(255, 255, 255, 0.7);
+            transition: width 0.3s ease;
+            z-index: 100;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .sidebar:hover {
+            width: 260px;
+        }
+
+        .sidebar .logo-section {
+            color: #000;
+            display: flex;
+            align-items: center;
+            padding: 25px 10px 15px;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .logo-section img {
+            width: 43px;
+            border-radius: 50%;
+        }
+
+        .logo-section h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-left: 0; /* Adjusted for centered look */
+            display: none;
+        }
+
+        .sidebar:hover .logo-section h2 {
+            display: block;
+        }
+
+        .sidebar .links {
+            list-style: none;
+            margin-top: 20px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            width: 100%;
+            height: calc(100% - 200px); /* Adjust height based on new logo section */
+        }
+        
+        .sidebar .links::-webkit-scrollbar { display: none; }
+
+        .links li {
+            display: flex;
+            border-radius: 4px;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .links li:hover, .links li.active {
+            cursor: pointer;
+            background: #fff;
+        }
+        
+        .links li span { padding: 12px 10px; }
+
+        .links li a {
+            padding: 10px;
+            color: #000;
+            display: none;
+            font-weight: 500;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .sidebar:hover .links li a {
+            display: block;
+        }
+        
+        .main-content {
+            margin-left: 110px;
+            width: calc(100% - 110px);
+            height: 100vh;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+            padding: 20px;
+        }
+        
+        .sidebar:hover ~ .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+        }
+
+        /* Match Dropdown in Sidebar */
+        .match-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 15px;
+            width: 100%;
+            padding: 0 10px;
+        }
+        .dropdown-toggle {
+            background: rgba(0, 121, 107, 0.8);
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 12px;
+            font-family: "Inter", sans-serif;
+            width: 100%;
+            border-radius: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            display: none;
+        }
+        .sidebar:hover .dropdown-toggle {
+            display: block;
+        }
         .dropdown-toggle:hover { opacity: 0.9; }
-        .dropdown-content { display: none; position: absolute; background-color: #f1f1f1; min-width: 320px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 100; border-radius: 4px; max-height: 300px; overflow-y: auto; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 240px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            left: 10px;
+            top: 45px;
+        }
         .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; font-size: 14px; font-weight: 400; }
         .dropdown-content a:hover { background-color: #ddd; }
         .show { display: block; }
+        
+        /* ================================================ */
+        /* Core Application CSS (Topbar, Cards, Tables etc.)*/
+        /* ================================================ */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0; }
+        .topbar { background:linear-gradient(180deg,var(--green),var(--deep-green)); color:#fff;padding:20px 22px; border-radius:6px 6px 0 0; }
+        .top-title { font-weight:600; font-size:18px; margin:0 0 6px; position: relative; }
+        .meta { display:flex; gap:18px; font-size:13px; margin-bottom:12px; flex-wrap: wrap; }
+        .card{ background:var(--card); border-radius:0 0 6px 6px; padding:18px 22px; box-shadow:0 6px 18px rgba(20,20,20,0.06); margin-top:0; }
+        .card.hidden { display: none; }
         .squad-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; margin-top:12px; }
         .squad-item{ padding:18px; border-radius:14px; font-weight:600; color:#fff; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.15); transition:transform 0.2s; text-decoration: none; display: block; }
         .squad-item:hover{transform:translateY(-4px)}
@@ -169,7 +260,7 @@
         .points-table tr:nth-child(even) { background-color: #f9f9f9; }
         .disclaimer { text-align: center; color: red; font-weight: 600; margin-top: 30px; }
         .team-a{ color: #E53935; } .team-b{ color: #1E88E5; } .team-c{ color: #43A047; } .team-d{ color: #8E24AA; }
-        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal-overlay { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
         .modal-content { background-color: #fefefe; margin: 5% auto; padding: 0; border: 1px solid #888; width: 80%; max-width: 650px; border-radius: 8px; position: relative; animation-name: animatetop; animation-duration: 0.4s; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         @keyframes animatetop { from {top: -300px; opacity: 0} to {top: 0; opacity: 1} }
         .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background-color: var(--deep-green); color: white; border-radius: 8px 8px 0 0; }
@@ -258,6 +349,81 @@
         .fixture-match-item .match-teams select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; background-color: #fff; font-family: inherit; font-weight: 600; max-width: 150px; }
         .match-notes { min-width: 150px; padding: 5px 8px; border-radius: 4px; background-color: #f8f9fa; font-size: 0.9em; color: #555; text-align: right; cursor: text; }
         .match-notes:focus { outline: 1px solid var(--deep-green); background-color: #fff; box-shadow: 0 0 5px rgba(15, 157, 88, 0.2); }
+    
+        /* নতুন পিডিএফ ডাউনলোড বাটনের জন্য CSS */
+        .download-pdf-btn {
+            background-color: #0277BD; /* A nice blue color */
+            color: white;
+        }
+        .download-pdf-btn:hover {
+            background-color: #01579B;
+        }
+        
+        /* Floating Score Bar এর জন্য CSS */
+        #floatingScoreBar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 999;
+            font-family: 'Inter', sans-serif;
+            display: none; /* প্রাথমিকভাবে হিডেন থাকবে */
+            color: #333;
+        }
+        #floatingScoreBar.visible {
+            display: block;
+        }
+        #floatingScoreBar-header {
+            padding: 10px 15px;
+            cursor: move;
+            background-color: var(--deep-green);
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            font-weight: 600;
+            font-size: 1em;
+        }
+        #floatingScoreBar-content {
+            padding: 15px;
+            font-size: 0.95em;
+        }
+        .float-innings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .float-innings-row:last-child {
+            border-bottom: none;
+        }
+        .float-team-name {
+            font-weight: 600;
+        }
+        .float-score {
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        .float-overs {
+            font-size: 0.85em;
+            color: var(--muted);
+            margin-left: 8px;
+        }
+        #float-match-result {
+            margin-top: 12px;
+            padding: 10px;
+            background-color: #e3f2fd;
+            color: #1e88e5;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+
     </style>
 </head>
 <body>
@@ -274,15 +440,12 @@
             <h1>Cricket Carnival 2025</h1>
             <div class="subtitle">Admin Panel Access</div>
         </div>
-        
         <form id="loginForm">
             <div class="form-group">
                 <label for="loginCode">Login Code</label>
                 <input type="password" id="loginCode" placeholder="Enter secret code" required>
             </div>
-            
             <button type="submit" class="login-btn">Enter Carnival</button>
-            
             <div id="message" class="message"></div>
         </form>
     </div>
@@ -291,401 +454,428 @@
         <h1>Welcome to<br>Cricket Carnival 2025</h1>
     </div>
 
-    <div id="mainAppContainer" style="display: none;">
-        <div class="container">
-            <div class="topbar">
-                <div class="top-title">
-                    <div class="match-dropdown">
-                        <button class="dropdown-toggle" id="dropdownBtn">
-                            <span id="selectedMatch">Select a Match</span> ▾
-                        </button>
-                        <div class="dropdown-content" id="myDropdown">
-                            <a data-match="ID vs Principal (Group D)" data-match-ref="id_vs_principal" href="#">ID vs Principal (Group D)</a>
-                            <a data-match="Corporate Credit vs Card Operation (Group A)" data-match-ref="cc_vs_co" href="#">Corporate Credit vs Card Operation (Group A)</a>
-                            <a data-match="Treasury vs Card Business (Group C)" data-match-ref="tr_vs_cb" href="#">Treasury vs Card Business (Group C)</a>
-                            <a data-match="Dhaka Central Zone vs Dhaka South Zone (Group B)" data-match-ref="dc_vs_ds" href="#">Dhaka Central Zone vs Dhaka South Zone (Group B)</a>
-                            <a data-match="Card Operation vs ICT Operation (Group A)" data-match-ref="co_vs_ict" href="#">Card Operation vs ICT Operation (Group A)</a>
-                            <a data-match="Card Business vs CAM &amp; RD (Group C)" data-match-ref="cb_vs_cam" href="#">Card Business vs CAM &amp; RD (Group C)</a>
-                            <a data-match="Corporate Credit vs ICT Operation (Group A)" data-match-ref="cc_vs_ict" href="#">Corporate Credit vs ICT Operation (Group A)</a>
-                            <a data-match="ID vs SDD (Group D)" data-match-ref="id_vs_sdd" href="#">ID vs SDD (Group D)</a>
-                            <a data-match="Dhaka South Zone vs Narayangonj Zone (Group B)" data-match-ref="ds_vs_nz" href="#">Dhaka South Zone vs Narayangonj Zone (Group B)</a>
-                            <a data-match="Treasury vs CAM &amp; RD (Group C)" data-match-ref="tr_vs_cam" href="#">Treasury vs CAM &amp; RD (Group C)</a>
-                            <a data-match="SDD vs Principal (Group D)" data-match-ref="sdd_vs_p" href="#">SDD vs Principal (Group D)</a>
-                            <a data-match="Dhaka Central Zone vs Narayangonj Zone (Group B)" data-match-ref="dc_vs_nz" href="#">Dhaka Central Zone vs Narayangonj Zone (Group B)</a>
-                            <a data-match="QF1: Winner A vs Runner-up C" data-match-ref="qf1" href="#">QF1: Winner A vs Runner-up C</a>
-                            <a data-match="QF2: Winner C vs Runner-up A" data-match-ref="qf2" href="#">QF2: Winner C vs Runner-up A</a>
-                            <a data-match="QF4: Winner D vs Runner-up B" data-match-ref="qf4" href="#">QF4: Winner D vs Runner-up B</a>
-                            <a data-match="QF3: Winner B vs Runner-up D" data-match-ref="qf3" href="#">QF3: Winner B vs Runner-up D</a>
-                            <a data-match="SF1: Winner QF2 vs Winner QF4" data-match-ref="sf1" href="#">SF1: Winner QF2 vs Winner QF4</a>
-                            <a data-match="SF2: Winner QF1 vs Winner QF3" data-match-ref="sf2" href="#">SF2: Winner QF1 vs Winner QF3</a>
-                            <a data-match="Final: Winner SF1 vs Winner SF2" data-match-ref="final" href="#">Final: Winner SF1 vs Winner SF2</a>
-                        </div>
+    <div id="mainAppContainer">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="https://i.postimg.cc/d1ggZJNN/Compress-JPEG-Online-img-512x512-1.jpg" alt="logo">
+                <h2>Cricket Carnival 2025</h2>
+                <div class="match-dropdown">
+                    <button class="dropdown-toggle" id="dropdownBtn">
+                        <span id="selectedMatch">Select a Match</span> ▾
+                    </button>
+                    <div class="dropdown-content" id="myDropdown">
+                        <a data-match="ID vs Principal (Group D)" data-match-ref="id_vs_principal" href="#">ID vs Principal (Group D)</a>
+                        <a data-match="Corporate Credit vs Card Operation (Group A)" data-match-ref="cc_vs_co" href="#">Corporate Credit vs Card Operation (Group A)</a>
+                        <a data-match="Treasury vs Card Business (Group C)" data-match-ref="tr_vs_cb" href="#">Treasury vs Card Business (Group C)</a>
+                        <a data-match="Dhaka Central Zone vs Dhaka South Zone (Group B)" data-match-ref="dc_vs_ds" href="#">Dhaka Central Zone vs Dhaka South Zone (Group B)</a>
+                        <a data-match="Card Operation vs ICT Operation (Group A)" data-match-ref="co_vs_ict" href="#">Card Operation vs ICT Operation (Group A)</a>
+                        <a data-match="Card Business vs CAM &amp; RD (Group C)" data-match-ref="cb_vs_cam" href="#">Card Business vs CAM &amp; RD (Group C)</a>
+                        <a data-match="Corporate Credit vs ICT Operation (Group A)" data-match-ref="cc_vs_ict" href="#">Corporate Credit vs ICT Operation (Group A)</a>
+                        <a data-match="ID vs SDD (Group D)" data-match-ref="id_vs_sdd" href="#">ID vs SDD (Group D)</a>
+                        <a data-match="Dhaka South Zone vs Narayangonj Zone (Group B)" data-match-ref="ds_vs_nz" href="#">Dhaka South Zone vs Narayangonj Zone (Group B)</a>
+                        <a data-match="Treasury vs CAM &amp; RD (Group C)" data-match-ref="tr_vs_cam" href="#">Treasury vs CAM &amp; RD (Group C)</a>
+                        <a data-match="SDD vs Principal (Group D)" data-match-ref="sdd_vs_p" href="#">SDD vs Principal (Group D)</a>
+                        <a data-match="Dhaka Central Zone vs Narayangonj Zone (Group B)" data-match-ref="dc_vs_nz" href="#">Dhaka Central Zone vs Narayangonj Zone (Group B)</a>
+                        <a data-match="QF1: Winner A vs Runner-up C" data-match-ref="qf1" href="#">QF1: Winner A vs Runner-up C</a>
+                        <a data-match="QF2: Winner C vs Runner-up A" data-match-ref="qf2" href="#">QF2: Winner C vs Runner-up A</a>
+                        <a data-match="QF4: Winner D vs Runner-up B" data-match-ref="qf4" href="#">QF4: Winner D vs Runner-up B</a>
+                        <a data-match="QF3: Winner B vs Runner-up D" data-match-ref="qf3" href="#">QF3: Winner B vs Runner-up D</a>
+                        <a data-match="SF1: Winner QF2 vs Winner QF4" data-match-ref="sf1" href="#">SF1: Winner QF2 vs Winner QF4</a>
+                        <a data-match="SF2: Winner QF1 vs Winner QF3" data-match-ref="sf2" href="#">SF2: Winner QF1 vs Winner QF3</a>
+                        <a data-match="Final: Winner SF1 vs Winner SF2" data-match-ref="final" href="#">Final: Winner SF1 vs Winner SF2</a>
                     </div>
-                </div>
-                <div class="meta">
-                    <div><strong>Series:</strong> Cricket Carnival 2025</div>
-                    <div><strong>Venue:</strong> Dhaka University Griund, Dhaka</div>
-                    <div id="matchDateTime"><strong>Date &amp; Time:</strong> Today, 3:00 PM LOCAL</div>
-                </div>
-                <div aria-label="Match Information" class="tabs" role="tablist">
-                    <button aria-controls="info-panel" aria-selected="true" class="tab active" id="info-tab" role="tab">Info</button>
-                    <button aria-controls="live-panel" aria-selected="false" class="tab" id="live-tab" role="tab" tabindex="-1">Live</button>
-                    <button aria-controls="scorecard-panel" aria-selected="false" class="tab" id="scorecard-tab" role="tab" tabindex="-1">Scorecard</button>
-                    <button aria-controls="squads-panel" aria-selected="false" class="tab" id="squads-tab" role="tab" tabindex="-1">Squads</button>
-                    <button aria-controls="points-panel" aria-selected="false" class="tab" id="points-tab" role="tab" tabindex="-1">Points Table</button>
-                    <button aria-controls="fixtures-panel" aria-selected="false" class="tab" id="fixtures-tab" role="tab" tabindex="-1">Fixtures</button>
                 </div>
             </div>
-            <div aria-labelledby="info-tab" class="card" id="info-panel" role="tabpanel">
-                <h3>Match Info</h3>
-                <p>উপরের ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
-            </div>
-            <div aria-labelledby="live-tab" class="card" id="live-panel" role="tabpanel">
-                <h3>Live Score</h3>
-                <p>লাইভ স্কোর দেখার জন্য ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
-            </div>
-            <div aria-labelledby="scorecard-panel" class="card hidden" id="scorecard-panel" role="tabpanel">
-                <h3>Scorecard</h3>
-                <div id="scorecardContent">
-                    <p>উপরের ড্রপডাউন থেকে ম্যাচ সিলেক্ট করুন।</p>
+            <ul class="links">
+                <li id="info-link" class="active">
+                    <span class="material-symbols-outlined">info</span>
+                    <a href="#">Info</a>
+                </li>
+                <li id="live-link">
+                    <span class="material-symbols-outlined">sensors</span>
+                    <a href="#">Live</a>
+                </li>
+                <li id="scorecard-link">
+                    <span class="material-symbols-outlined">scoreboard</span>
+                    <a href="#">Scorecard</a>
+                </li>
+                <li id="squads-link">
+                    <span class="material-symbols-outlined">groups</span>
+                    <a href="#">Squads</a>
+                </li>
+                <li id="points-link">
+                    <span class="material-symbols-outlined">leaderboard</span>
+                    <a href="#">Points Table</a>
+                </li>
+                <li id="fixtures-link">
+                    <span class="material-symbols-outlined">event</span>
+                    <a href="#">Fixtures</a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="topbar">
+                    <div class="meta">
+                        <div><strong>Series:</strong> Cricket Carnival 2025</div>
+                        <div><strong>Venue:</strong> Dhaka University Ground, Dhaka</div>
+                        <div id="matchDateTime"><strong>Date &amp; Time:</strong> TBD</div>
+                    </div>
+                    </div>
+
+                <div class="card" id="info-panel" role="tabpanel">
+                    <h3>Match Info</h3>
+                    <p>Select a match from the sidebar to see information.</p>
+                </div>
+                <div class="card hidden" id="live-panel" role="tabpanel">
+                    <h3>Live Score</h3>
+                    <p>Select a match to see the live score.</p>
+                </div>
+                <div class="card hidden" id="scorecard-panel" role="tabpanel">
+                    <h3>Scorecard</h3>
+                    <div id="scorecardContent">
+                        <p>Select a match to view or edit the scorecard.</p>
+                    </div>
+                </div>
+                <div class="card hidden" id="squads-panel" role="tabpanel">
+                    <h3>Teams</h3>
+                    <div class="squad-list">
+                        <a class="squad-item" data-team="Corporate_Credit" href="#">Corporate Credit</a>
+                        <a class="squad-item" data-team="Card_Operation" href="#">Card Operation</a>
+                        <a class="squad-item" data-team="ICT_Operation" href="#">ICT Operation</a>
+                        <a class="squad-item" data-team="Dhaka_South_Zone" href="#">Dhaka South Zone</a>
+                        <a class="squad-item" data-team="Narayangonj_Zone" href="#">Narayangonj Zone</a>
+                        <a class="squad-item" data-team="Dhaka_Central_Zone" href="#">Dhaka Central Zone</a>
+                        <a class="squad-item" data-team="Treasury" href="#">Treasury</a>
+                        <a class="squad-item" data-team="Card_Business" href="#">Card Business</a>
+                        <a class="squad-item" data-team="CAM_RD_Division" href="#">CAM &amp; RD</a>
+                        <a class="squad-item" data-team="ID_Division" href="#">ID</a>
+                        <a class="squad-item" data-team="SDD_Division" href="#">SDD</a>
+                        <a class="squad-item" data-team="Principal_Branch" href="#">Principal</a>
+                    </div>
+                </div>
+                <div class="card hidden" id="points-panel" role="tabpanel">
+                     <div class="points-table-section">
+                        <h3>Points Table</h3>
+                        <h4 data-group-name="Group_A">Group A</h4>
+                        <table class="points-table">
+                            <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td data-team-name="Corporate Credit">Corporate Credit</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="Card Operation">Card Operation</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="ICT Operation">ICT Operation</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 data-group-name="Group_B">Group B</h4>
+                        <table class="points-table">
+                            <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td data-team-name="Dhaka South Zone">Dhaka South Zone</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="Dhaka Central Zone">Dhaka Central Zone</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="Narayangonj Zone">Narayangonj Zone</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 data-group-name="Group_C">Group C</h4>
+                        <table class="points-table">
+                            <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td data-team-name="Treasury">Treasury</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="Card Business">Card Business</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="CAM & RD">CAM &amp; RD</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 data-group-name="Group_D">Group D</h4>
+                        <table class="points-table">
+                            <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td data-team-name="ID">ID</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="SDD">SDD</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                                <tr>
+                                    <td data-team-name="Principal">Principal</td>
+                                    <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
+                                    <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
+                                    <td><input type="text" value="0.00"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="knockout-selector">
+                            <h4>Knockout Stage Selections</h4>
+                            <h5>Super Eight</h5>
+                            <div class="knockout-match">
+                                <label>QF1: Winner A vs Runner-up C</label>
+                                <select data-placeholder="Winner A" id="k_qf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up C" id="k_qf1_t2"></select>
+                            </div>
+                            <div class="knockout-match">
+                                <label>QF2: Winner C vs Runner-up A</label>
+                                <select data-placeholder="Winner C" id="k_qf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up A" id="k_qf2_t2"></select>
+                            </div>
+                            <div class="knockout-match">
+                                <label>QF4: Winner D vs Runner-up B</label>
+                                <select data-placeholder="Winner D" id="k_qf4_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up B" id="k_qf4_t2"></select>
+                            </div>
+                            <div class="knockout-match">
+                                <label>QF3: Winner B vs Runner-up D</label>
+                                <select data-placeholder="Winner B" id="k_qf3_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up D" id="k_qf3_t2"></select>
+                            </div>
+                            <h5>Semi Final</h5>
+                            <div class="knockout-match">
+                                <label>SF1: Winner QF2 vs Winner QF4</label>
+                                <select data-placeholder="Winner QF2" id="k_sf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF4" id="k_sf1_t2"></select>
+                            </div>
+                            <div class="knockout-match">
+                                <label>SF2: Winner QF1 vs Winner QF3</label>
+                                <select data-placeholder="Winner QF1" id="k_sf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF3" id="k_sf2_t2"></select>
+                            </div>
+                            <h5>Final</h5>
+                            <div class="knockout-match">
+                                <label>Final: Winner SF1 vs Winner SF2</label>
+                                <select data-placeholder="Winner SF1" id="k_final_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner SF2" id="k_final_t2"></select>
+                            </div>
+                        </div>
+                        <button class="points-save-btn" id="savePointsBtn">Save Changes</button>
+                    </div>
+                </div>
+                <div class="card hidden" id="fixtures-panel" role="tabpanel">
+                     <h3>Full Fixture</h3>
+                    <h4>Group stage — 12 matches</h4>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Sat 1 Nov 2025</div>
+                        <div class="fixture-match-item" data-match-ref="id_vs_principal">
+                            <span class="match-time">07:30–10:00</span>
+                            <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
+                            <span class="match-group">(Group D)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="cc_vs_co">
+                            <span class="match-time">10:00–12:30</span>
+                            <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">Card Operation</span></div>
+                            <span class="match-group">(Group A)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="tr_vs_cb">
+                            <span class="match-time">12:30–03:00</span>
+                            <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">Card Business</span></div>
+                            <span class="match-group">(Group C)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Fri 7 Nov 2025</div>
+                        <div class="fixture-match-item" data-match-ref="dc_vs_ds">
+                            <span class="match-time">07:30–10:00</span>
+                            <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Dhaka South Zone</span></div>
+                            <span class="match-group">(Group B)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="co_vs_ict">
+                            <span class="match-time">10:00–12:30</span>
+                            <div class="match-teams"><span class="team-a">Card Operation</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
+                            <span class="match-group">(Group A)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="cb_vs_cam">
+                            <span class="match-time">12:30–03:00</span>
+                            <div class="match-teams"><span class="team-c">Card Business</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
+                            <span class="match-group">(Group C)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Sat 8 Nov 2025</div>
+                        <div class="fixture-match-item" data-match-ref="cc_vs_ict">
+                            <span class="match-time">07:30–10:00</span>
+                            <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
+                            <span class="match-group">(Group A)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="id_vs_sdd">
+                            <span class="match-time">10:00–12:30</span>
+                            <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">SDD</span></div>
+                            <span class="match-group">(Group D)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="ds_vs_nz">
+                            <span class="match-time">12:30–03:00</span>
+                            <div class="match-teams"><span class="team-b">Dhaka South Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
+                            <span class="match-group">(Group B)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Fri 14 Nov 2025</div>
+                        <div class="fixture-match-item" data-match-ref="tr_vs_cam">
+                            <span class="match-time">07:30–10:00</span>
+                            <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
+                            <span class="match-group">(Group C)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="sdd_vs_p">
+                            <span class="match-time">10:00–12:30</span>
+                            <div class="match-teams"><span class="team-d">SDD</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
+                            <span class="match-group">(Group D)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="dc_vs_nz">
+                            <span class="match-time">12:30–03:00</span>
+                            <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
+                            <span class="match-group">(Group B)</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <h4 class="fixture-knockout-header">Knockout stage — 7 matches</h4>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Sat 15 Nov 2025 — Quarterfinals</div>
+                        <div class="fixture-match-item" data-match-ref="qf1">
+                            <span class="match-time">08:00–11:30</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">QF1</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="qf2">
+                            <span class="match-time">11:30–03:00</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">QF2</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Fri 21 Nov 2025 — Quarterfinals</div>
+                        <div class="fixture-match-item" data-match-ref="qf4">
+                            <span class="match-time">08:00–11:30</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">QF4</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="qf3">
+                            <span class="match-time">11:30–03:00</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">QF3</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Sat 22 Nov 2025 — Semifinals</div>
+                        <div class="fixture-match-item" data-match-ref="sf1">
+                            <span class="match-time">08:00–11:30</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">SF1</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                        <div class="fixture-match-item" data-match-ref="sf2">
+                            <span class="match-time">11:30–03:00</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">SF2</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <div class="fixture-day-card">
+                        <div class="fixture-day-header">Sat 28 Nov 2025 — Final</div>
+                        <div class="fixture-match-item" data-match-ref="final">
+                            <span class="match-time">09:00–03:00</span>
+                            <div class="match-teams">
+                                <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
+                            </div>
+                            <span class="match-group">Final</span>
+                            <span class="match-notes" contenteditable="true" spellcheck="false"></span>
+                        </div>
+                    </div>
+                    <p class="disclaimer">***Schedule may be changed based on different circumstances***</p>
+                    <button class="points-save-btn" id="saveFixturesBtn" style="margin-top: 20px;">Save Fixtures</button>
                 </div>
             </div>
-            <div aria-labelledby="squads-tab" class="card hidden" id="squads-panel" role="tabpanel">
-                <h3>Teams</h3>
-                <div class="squad-list">
-                    <a class="squad-item" data-team="Corporate_Credit" href="#">Corporate Credit</a>
-                    <a class="squad-item" data-team="Card_Operation" href="#">Card Operation</a>
-                    <a class="squad-item" data-team="ICT_Operation" href="#">ICT Operation</a>
-                    <a class="squad-item" data-team="Dhaka_South_Zone" href="#">Dhaka South Zone</a>
-                    <a class="squad-item" data-team="Narayangonj_Zone" href="#">Narayangonj Zone</a>
-                    <a class="squad-item" data-team="Dhaka_Central_Zone" href="#">Dhaka Central Zone</a>
-                    <a class="squad-item" data-team="Treasury" href="#">Treasury</a>
-                    <a class="squad-item" data-team="Card_Business" href="#">Card Business</a>
-                    <a class="squad-item" data-team="CAM_RD_Division" href="#">CAM &amp; RD</a>
-                    <a class="squad-item" data-team="ID_Division" href="#">ID</a>
-                    <a class="squad-item" data-team="SDD_Division" href="#">SDD</a>
-                    <a class="squad-item" data-team="Principal_Branch" href="#">Principal</a>
-                </div>
-            </div>
-            <div aria-labelledby="points-tab" class="card hidden" id="points-panel" role="tabpanel">
-                <div class="points-table-section">
-                    <h3>Points Table</h3>
-                    <h4 data-group-name="Group_A">Group A</h4>
-                    <table class="points-table">
-                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td data-team-name="Corporate Credit">Corporate Credit</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="Card Operation">Card Operation</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="ICT Operation">ICT Operation</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4 data-group-name="Group_B">Group B</h4>
-                    <table class="points-table">
-                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td data-team-name="Dhaka South Zone">Dhaka South Zone</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="Dhaka Central Zone">Dhaka Central Zone</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="Narayangonj Zone">Narayangonj Zone</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4 data-group-name="Group_C">Group C</h4>
-                    <table class="points-table">
-                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td data-team-name="Treasury">Treasury</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="Card Business">Card Business</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="CAM & RD">CAM &amp; RD</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4 data-group-name="Group_D">Group D</h4>
-                    <table class="points-table">
-                        <thead><tr><th>Team</th><th>M</th><th>W</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td data-team-name="ID">ID</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="SDD">SDD</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                            <tr>
-                                <td data-team-name="Principal">Principal</td>
-                                <td><select><option value="0">0</option><option value="1">1</option><option selected="" value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></td>
-                                <td><select><option selected="" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></td>
-                                <td><input type="text" value="0.00"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="knockout-selector">
-                        <h4>Knockout Stage Selections</h4>
-                        <h5>Super Eight</h5>
-                        <div class="knockout-match">
-                            <label>QF1: Winner A vs Runner-up C</label>
-                            <select data-placeholder="Winner A" id="k_qf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up C" id="k_qf1_t2"></select>
-                        </div>
-                        <div class="knockout-match">
-                            <label>QF2: Winner C vs Runner-up A</label>
-                            <select data-placeholder="Winner C" id="k_qf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up A" id="k_qf2_t2"></select>
-                        </div>
-                        <div class="knockout-match">
-                            <label>QF4: Winner D vs Runner-up B</label>
-                            <select data-placeholder="Winner D" id="k_qf4_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up B" id="k_qf4_t2"></select>
-                        </div>
-                        <div class="knockout-match">
-                            <label>QF3: Winner B vs Runner-up D</label>
-                            <select data-placeholder="Winner B" id="k_qf3_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Runner-up D" id="k_qf3_t2"></select>
-                        </div>
-                        <h5>Semi Final</h5>
-                        <div class="knockout-match">
-                            <label>SF1: Winner QF2 vs Winner QF4</label>
-                            <select data-placeholder="Winner QF2" id="k_sf1_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF4" id="k_sf1_t2"></select>
-                        </div>
-                        <div class="knockout-match">
-                            <label>SF2: Winner QF1 vs Winner QF3</label>
-                            <select data-placeholder="Winner QF1" id="k_sf2_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner QF3" id="k_sf2_t2"></select>
-                        </div>
-                        <h5>Final</h5>
-                        <div class="knockout-match">
-                            <label>Final: Winner SF1 vs Winner SF2</label>
-                            <select data-placeholder="Winner SF1" id="k_final_t1"></select> <span class="vs-text">vs</span> <select data-placeholder="Winner SF2" id="k_final_t2"></select>
-                        </div>
-                    </div>
-                    <button class="points-save-btn" id="savePointsBtn">Save Changes</button>
-                </div>
-            </div>
-            <div aria-labelledby="fixtures-tab" class="card hidden" id="fixtures-panel" role="tabpanel">
-                <h3>Full Fixture</h3>
-                <h4>Group stage — 12 matches</h4>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Sat 1 Nov 2025</div>
-                    <div class="fixture-match-item" data-match-ref="id_vs_principal">
-                        <span class="match-time">07:30–10:00</span>
-                        <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
-                        <span class="match-group">(Group D)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="cc_vs_co">
-                        <span class="match-time">10:00–12:30</span>
-                        <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">Card Operation</span></div>
-                        <span class="match-group">(Group A)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="tr_vs_cb">
-                        <span class="match-time">12:30–03:00</span>
-                        <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">Card Business</span></div>
-                        <span class="match-group">(Group C)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Fri 7 Nov 2025</div>
-                    <div class="fixture-match-item" data-match-ref="dc_vs_ds">
-                        <span class="match-time">07:30–10:00</span>
-                        <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Dhaka South Zone</span></div>
-                        <span class="match-group">(Group B)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="co_vs_ict">
-                        <span class="match-time">10:00–12:30</span>
-                        <div class="match-teams"><span class="team-a">Card Operation</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
-                        <span class="match-group">(Group A)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="cb_vs_cam">
-                        <span class="match-time">12:30–03:00</span>
-                        <div class="match-teams"><span class="team-c">Card Business</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
-                        <span class="match-group">(Group C)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Sat 8 Nov 2025</div>
-                    <div class="fixture-match-item" data-match-ref="cc_vs_ict">
-                        <span class="match-time">07:30–10:00</span>
-                        <div class="match-teams"><span class="team-a">Corporate Credit</span> <span class="vs">vs</span> <span class="team-a">ICT Operation</span></div>
-                        <span class="match-group">(Group A)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="id_vs_sdd">
-                        <span class="match-time">10:00–12:30</span>
-                        <div class="match-teams"><span class="team-d">ID</span> <span class="vs">vs</span> <span class="team-d">SDD</span></div>
-                        <span class="match-group">(Group D)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="ds_vs_nz">
-                        <span class="match-time">12:30–03:00</span>
-                        <div class="match-teams"><span class="team-b">Dhaka South Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
-                        <span class="match-group">(Group B)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Fri 14 Nov 2025</div>
-                    <div class="fixture-match-item" data-match-ref="tr_vs_cam">
-                        <span class="match-time">07:30–10:00</span>
-                        <div class="match-teams"><span class="team-c">Treasury</span> <span class="vs">vs</span> <span class="team-c">CAM &amp; RD</span></div>
-                        <span class="match-group">(Group C)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="sdd_vs_p">
-                        <span class="match-time">10:00–12:30</span>
-                        <div class="match-teams"><span class="team-d">SDD</span> <span class="vs">vs</span> <span class="team-d">Principal</span></div>
-                        <span class="match-group">(Group D)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="dc_vs_nz">
-                        <span class="match-time">12:30–03:00</span>
-                        <div class="match-teams"><span class="team-b">Dhaka Central Zone</span> <span class="vs">vs</span> <span class="team-b">Narayangonj Zone</span></div>
-                        <span class="match-group">(Group B)</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <h4 class="fixture-knockout-header">Knockout stage — 7 matches</h4>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Sat 15 Nov 2025 — Quarterfinals</div>
-                    <div class="fixture-match-item" data-match-ref="qf1">
-                        <span class="match-time">08:00–11:30</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">QF1</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="qf2">
-                        <span class="match-time">11:30–03:00</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">QF2</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Fri 21 Nov 2025 — Quarterfinals</div>
-                    <div class="fixture-match-item" data-match-ref="qf4">
-                        <span class="match-time">08:00–11:30</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">QF4</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="qf3">
-                        <span class="match-time">11:30–03:00</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">QF3</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Sat 22 Nov 2025 — Semifinals</div>
-                    <div class="fixture-match-item" data-match-ref="sf1">
-                        <span class="match-time">08:00–11:30</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">SF1</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                    <div class="fixture-match-item" data-match-ref="sf2">
-                        <span class="match-time">11:30–03:00</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">SF2</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <div class="fixture-day-card">
-                    <div class="fixture-day-header">Sat 28 Nov 2025 — Final</div>
-                    <div class="fixture-match-item" data-match-ref="final">
-                        <span class="match-time">09:00–03:00</span>
-                        <div class="match-teams">
-                            <select class="fixture-knockout-select"></select> <span class="vs">vs</span> <select class="fixture-knockout-select"></select>
-                        </div>
-                        <span class="match-group">Final</span>
-                        <span class="match-notes" contenteditable="true" spellcheck="false"></span>
-                    </div>
-                </div>
-                <p class="disclaimer">***Schedule may be changed based on different circumstances***</p>
-                <button class="points-save-btn" id="saveFixturesBtn" style="margin-top: 20px;">Save Fixtures</button>
-            </div>
+            
             <div class="modal-overlay" id="squadModal">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -699,15 +889,37 @@
                     </div>
                 </div>
             </div>
+        </main>
+    </div>
+
+    <div id="floatingScoreBar">
+        <div id="floatingScoreBar-header">Live Score</div>
+        <div id="floatingScoreBar-content">
+            <div class="float-innings-row">
+                <span id="float-team1-name" class="float-team-name">Team A</span>
+                <div>
+                    <span id="float-team1-score" class="float-score">0/0</span>
+                    <span id="float-team1-overs" class="float-overs">(0.0)</span>
+                </div>
+            </div>
+            <div class="float-innings-row">
+                <span id="float-team2-name" class="float-team-name">Team B</span>
+                <div>
+                    <span id="float-team2-score" class="float-score">0/0</span>
+                    <span id="float-team2-overs" class="float-overs">(0.0)</span>
+                </div>
+            </div>
+            <div id="float-match-result" style="display: none;"></div>
         </div>
     </div>
 
+
     <script type="module">
-        // Firebase SDK functions আমদানি করুন
+        // Firebase SDK functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getDatabase, ref, set, get, child, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-        // আপনার দেওয়া Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDWGHs6f3-m0sWt9p2WfbqojEh7DZzmdys",
             authDomain: "cricket-carnival-2025.firebaseapp.com",
@@ -718,7 +930,7 @@
             appId: "1:669183768621:web:a284feab1070999525e0a4"
         };
         
-        // Firebase চালু করুন
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const dbRef = ref(getDatabase());
@@ -745,17 +957,20 @@
             "Principal_Branch": Array.from({length: 11}, (_, i) => ({ name: `PB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=pb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
         };
 
+        // ================================================
+        // Data Handling Functions (Save, Load)
+        // ================================================
         function saveMatchData(matchRef, data) {
             if (!matchRef || !data) return;
             const firebaseMatchRef = ref(database, `scorecardData/${matchRef}`);
             set(firebaseMatchRef, data)
-                .then(() => console.log(`'${matchRef}' ম্যাচটি Firebase-এ সফলভাবে সেভ হয়েছে।`))
-                .catch(error => console.error("Firebase সেভ করতে সমস্যা:", error));
+                .then(() => console.log(`'${matchRef}' match data saved to Firebase.`))
+                .catch(error => console.error("Firebase save error:", error));
             try {
                 localStorage.setItem(`scorecard_${matchRef}`, JSON.stringify(data));
-                console.log(`'${matchRef}' ম্যাচটি Local Storage-এ সফলভাবে সেভ হয়েছে।`);
+                console.log(`'${matchRef}' match data saved to Local Storage.`);
             } catch (e) {
-                console.error("Local Storage সেভ করতে সমস্যা:", e);
+                console.error("Local Storage save error:", e);
             }
         }
 
@@ -763,11 +978,11 @@
             if (!matchRef) return null;
             const localData = localStorage.getItem(`scorecard_${matchRef}`);
             if (localData) {
-                console.log(`'${matchRef}' ম্যাচটি Local Storage থেকে লোড হয়েছে।`);
+                console.log(`'${matchRef}' match loaded from Local Storage.`);
                 try {
                     return JSON.parse(localData);
                 } catch (e) {
-                    console.error("Local Storage থেকে ডেটা পার্স করতে সমস্যা:", e);
+                    console.error("Error parsing local data:", e);
                     localStorage.removeItem(`scorecard_${matchRef}`);
                 }
             }
@@ -775,16 +990,16 @@
                 const firebaseMatchRef = ref(database, `scorecardData/${matchRef}`);
                 const snapshot = await get(firebaseMatchRef);
                 if (snapshot.exists()) {
-                    console.log(`'${matchRef}' ম্যাচটি Firebase থেকে লোড হয়েছে।`);
+                    console.log(`'${matchRef}' match loaded from Firebase.`);
                     const firebaseData = snapshot.val();
                     localStorage.setItem(`scorecard_${matchRef}`, JSON.stringify(firebaseData));
                     return firebaseData;
                 } else {
-                    console.log(`'${matchRef}' ম্যাচের জন্য কোনো ডেটা পাওয়া যায়নি।`);
+                    console.log(`No data found for '${matchRef}'.`);
                     return null;
                 }
             } catch (error) {
-                console.error("Firebase থেকে ডেটা লোড করতে সমস্যা:", error);
+                console.error("Firebase load error:", error);
                 return null;
             }
         }
@@ -815,9 +1030,11 @@
                 saveMatchData(matchRef, scorecardData[matchRef]);
             }
             renderScorecard(matchRef, team1, team2);
-            if (document.getElementById('live-panel').style.display !== 'none') {
+            // Re-render live score and floating bar
+            if (!document.getElementById('live-panel').classList.contains('hidden')) {
                 renderLiveScore(matchRef);
             }
+            updateFloatingScoreBar(matchRef); 
         }
         
         window.saveScorecard = function() {
@@ -845,37 +1062,38 @@
             }
         }
         
+        // ================================================
+        // Login and UI Initialization
+        // ================================================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const loginCode = document.getElementById('loginCode').value;
             const messageDiv = document.getElementById('message');
             const loginContainer = document.getElementById('loginContainer');
             const welcomeScreen = document.getElementById('post-login-welcome');
+            
             if (loginCode === 'carnival') {
                 loginContainer.classList.add('hidden');
                 setTimeout(() => {
                     welcomeScreen.style.display = 'flex';
-                    setTimeout(() => {
-                        welcomeScreen.classList.add('visible');
-                    }, 50);
+                    setTimeout(() => welcomeScreen.classList.add('visible'), 50);
                 }, 500);
+                
                 setTimeout(function() {
                     loginContainer.style.display = 'none';
                     welcomeScreen.style.display = 'none';
-                    document.getElementById('mainAppContainer').style.display = 'block';
+                    document.getElementById('mainAppContainer').style.display = 'flex'; // Use flex for sidebar layout
                     document.body.style.background = '#f7f8f8';
-                    document.body.style.animation = 'none';
                     document.body.style.justifyContent = 'flex-start';
                     document.body.style.alignItems = 'flex-start';
                     loadInitialData();
+                    makeDraggable(document.getElementById('floatingScoreBar')); // Floating bar কে draggable করা হচ্ছে
                 }, 3000); 
             } else {
                 messageDiv.textContent = 'Invalid login code. Please try again.';
                 messageDiv.className = 'message error';
                 messageDiv.style.display = 'block';
-                const inputField = document.getElementById('loginCode');
-                inputField.value = '';
-                inputField.focus();
+                document.getElementById('loginCode').value = '';
                 loginContainer.animate([
                     { transform: 'translateX(0)' }, { transform: 'translateX(-10px)' },
                     { transform: 'translateX(10px)' }, { transform: 'translateX(-10px)' },
@@ -884,6 +1102,9 @@
             }
         });
 
+        // ================================================
+        // App Constants and Mappings
+        // ================================================
         const teamNameList = [ "Corporate Credit", "Card Operation", "ICT Operation", "Dhaka South Zone", "Narayangonj Zone", "Dhaka Central Zone", "Treasury", "Card Business", "CAM & RD", "ID", "SDD", "Principal" ];
         const positions = ["Batsman", "Bowler", "All-rounder", "Wicket-keeper", "Captain", "Extra"];
         const reverseTeamNameMap = {
@@ -914,17 +1135,41 @@
             { matchRef: 'final', match: "Final: Winner SF1 vs Winner SF2", date: "Sat 28 Nov 2025", time: "09:00–03:00" },
         ];
     
-        const tabs = document.querySelectorAll('[role="tab"]');
-        const tabPanels = document.querySelectorAll('[role="tabpanel"]');
-        const tabList = document.querySelector('[role="tablist"]');
-        function switchTab(newTab) {
-          const targetPanelId = newTab.getAttribute('aria-controls');
-          tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
-          newTab.classList.add('active'); newTab.setAttribute('aria-selected', 'true'); newTab.removeAttribute('tabindex');
-          tabPanels.forEach(p => { p.id === targetPanelId ? p.classList.remove('hidden') : p.classList.add('hidden'); });
+        // ================================================
+        // Sidebar Navigation Logic
+        // ================================================
+        const sidebarLinks = document.querySelectorAll('.sidebar .links li');
+        const tabPanels = document.querySelectorAll('.main-content .card[role="tabpanel"]');
+
+        function switchTab(targetPanelId) {
+            sidebarLinks.forEach(link => {
+                const linkPanelId = link.id.replace('-link', '-panel');
+                if (linkPanelId === targetPanelId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            tabPanels.forEach(p => {
+                if (p.id === targetPanelId) {
+                    p.classList.remove('hidden');
+                } else {
+                    p.classList.add('hidden');
+                }
+            });
         }
-        tabs.forEach(tab => { tab.addEventListener('click', e => { switchTab(e.currentTarget); }); });
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const targetPanelId = link.id.replace('-link', '-panel');
+                switchTab(targetPanelId);
+            });
+        });
     
+        // ================================================
+        // Match Selection Dropdown Logic
+        // ================================================
         const dropdownBtn = document.getElementById("dropdownBtn");
         const dropdownContent = document.getElementById("myDropdown");
         const selectedMatchSpan = document.getElementById("selectedMatch");
@@ -956,11 +1201,16 @@
                 const matchText = event.target.getAttribute('data-match');
                 const matchRef = event.target.getAttribute('data-match-ref');
                 currentMatchRef = matchRef;
+                
+                document.getElementById('floatingScoreBar').classList.add('visible');
+
                 const team1Name = matchText.split(' vs ')[0].trim().replace(/QF\d: |SF\d: |Final: /, '');
                 const team2Name = matchText.split(' vs ')[1].split(' (')[0].trim();
+                
                 const fixture = fixtureData.find(f => f.matchRef === matchRef);
                 dateTimeElement.innerHTML = fixture ? `<strong>Date & Time:</strong> ${fixture.date}, ${fixture.time} LOCAL` : `<strong>Date & Time:</strong> TBD`;
                 selectedMatchSpan.textContent = matchText;
+                
                 const teams = matchText.replace(/QF\d: |SF\d: |Final: /, '').split(' vs ');
                 if (teams.length === 2) {
                     const team1 = teams[0].trim();
@@ -971,6 +1221,7 @@
                     }
                     renderScorecard(matchRef, team1, team2);
                     renderLiveScore(matchRef);
+                    updateFloatingScoreBar(matchRef); 
                     if(teamNameList.includes(team1) && teamNameList.includes(team2)) {
                         const team1Key = reverseTeamNameMap[team1];
                         const team2Key = reverseTeamNameMap[team2];
@@ -978,9 +1229,9 @@
                             displayPlayingXI(team1Key, team2Key, team1Name, team2Name);
                         }
                     } else {
-                        infoPanel.innerHTML = `<h3>Match Info</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
-                         document.getElementById("scorecardContent").innerHTML = `<h3>Scorecard</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
-                         document.getElementById("live-panel").innerHTML = `<h3>Live Score</h3><p>নকআউট ম্যাচের দলগুলো এখনো নির্ধারিত হয়নি।</p>`;
+                        infoPanel.innerHTML = `<h3>Match Info</h3><p>Knockout teams are yet to be determined.</p>`;
+                        document.getElementById("scorecardContent").innerHTML = `<h3>Scorecard</h3><p>Knockout teams are yet to be determined.</p>`;
+                        document.getElementById("live-panel").innerHTML = `<h3>Live Score</h3><p>Knockout teams are yet to be determined.</p>`;
                     }
                 }
             }
@@ -988,6 +1239,9 @@
 
         window.addEventListener('click', () => { if (dropdownContent.classList.contains('show')) { dropdownContent.classList.remove('show'); } });
     
+        // ================================================
+        // Squad Management Modal Logic
+        // ================================================
         const modal = document.getElementById('squadModal');
         const modalTeamName = document.getElementById('modalTeamName');
         const modalBody = document.getElementById('modal-body-content');
@@ -1009,6 +1263,7 @@
             tableHtml += `</tbody></table>`;
             modalBody.innerHTML = tableHtml;
         }
+
         squadLinks.forEach(link => {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -1064,24 +1319,18 @@
                 target.innerHTML = `<input type="text" value="${currentName}" />`;
                 const input = target.querySelector('input');
                 input.focus();
-                input.addEventListener('blur', () => {
-                    target.textContent = input.value.trim() || currentName;
-                });
+                input.addEventListener('blur', () => { target.textContent = input.value.trim() || currentName; });
                 input.addEventListener('keydown', (event) => { if (event.key === 'Enter') input.blur(); });
             }
             if (target.classList.contains('editable-position')) {
                 const currentPosition = target.textContent;
                 let selectHtml = `<select>`;
-                positions.forEach(pos => {
-                    selectHtml += `<option value="${pos}" ${pos === currentPosition ? 'selected' : ''}>${pos}</option>`;
-                });
+                positions.forEach(pos => { selectHtml += `<option value="${pos}" ${pos === currentPosition ? 'selected' : ''}>${pos}</option>`; });
                 selectHtml += `</select>`;
                 target.innerHTML = selectHtml;
                 const select = target.querySelector('select');
                 select.focus();
-                select.addEventListener('blur', () => {
-                    target.textContent = select.value;
-                });
+                select.addEventListener('blur', () => { target.textContent = select.value; });
                 select.addEventListener('change', () => select.blur());
             }
         });
@@ -1089,6 +1338,9 @@
         closeModalBtn.onclick = function() { modal.style.display = "none"; }
         window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
 
+        // ================================================
+        // Points Table & Fixtures Logic
+        // ================================================
         function populatePointsTable() {
             if (!pointsTableData || Object.keys(pointsTableData).length === 0) return;
             document.querySelectorAll('.points-table-section h4').forEach(header => {
@@ -1141,28 +1393,17 @@
             document.querySelectorAll('.points-table-section h4').forEach(header => {
                 const groupName = header.dataset.groupName;
                 const table = header.nextElementSibling;
-                const rows = table.querySelectorAll('tbody tr');
-                const groupData = [];
-                rows.forEach(row => {
-                    groupData.push({
-                        team: row.cells[0].dataset.teamName,
-                        M: row.cells[1].querySelector('select').value,
-                        W: row.cells[2].querySelector('select').value,
-                        L: row.cells[3].querySelector('select').value,
-                        Pts: row.cells[4].querySelector('select').value,
-                        NRR: row.cells[5].querySelector('input').value,
-                    });
-                });
-                dataToSave[groupName] = groupData;
+                dataToSave[groupName] = Array.from(table.querySelectorAll('tbody tr')).map(row => ({
+                    team: row.cells[0].dataset.teamName,
+                    M: row.cells[1].querySelector('select').value, W: row.cells[2].querySelector('select').value,
+                    L: row.cells[3].querySelector('select').value, Pts: row.cells[4].querySelector('select').value,
+                    NRR: row.cells[5].querySelector('input').value,
+                }));
             });
             dataToSave.knockoutSelections = {};
-            document.querySelectorAll('.knockout-selector select').forEach(select => {
-                dataToSave.knockoutSelections[select.id] = select.value;
-            });
-            set(ref(database, 'pointsTable'), dataToSave).then(() => {
-                alert('Points Table saved to Firebase successfully!');
-                pointsTableData = dataToSave;
-            }).catch(error => console.error("Error saving points table:", error));
+            document.querySelectorAll('.knockout-selector select').forEach(select => { dataToSave.knockoutSelections[select.id] = select.value; });
+            set(ref(database, 'pointsTable'), dataToSave).then(() => { alert('Points Table saved successfully!'); pointsTableData = dataToSave; })
+            .catch(error => console.error("Error saving points table:", error));
         });
 
         document.getElementById('saveFixturesBtn').addEventListener('click', () => {
@@ -1178,36 +1419,22 @@
                     dataToSave[matchRef].team2 = selects[1].value;
                 }
             });
-            set(ref(database, 'fixtureCustomData'), dataToSave).then(() => {
-                alert('Fixtures data saved to Firebase successfully!');
-                fixtureCustomData = dataToSave;
-            }).catch(error => console.error("Error saving fixtures:", error));
+            set(ref(database, 'fixtureCustomData'), dataToSave).then(() => { alert('Fixtures data saved successfully!'); fixtureCustomData = dataToSave; })
+            .catch(error => console.error("Error saving fixtures:", error));
         });
     
         document.addEventListener('DOMContentLoaded', () => {
             const teamOptions = ["", ...teamNameList];
             function populateSelect(selectElement, placeholder) {
-                selectElement.innerHTML = '';
-                teamOptions.forEach((teamName, index) => {
-                    const option = document.createElement('option');
-                    option.value = teamName;
-                    if (index === 0) {
-                        option.textContent = placeholder || '-- Select Team --';
-                    } else {
-                        option.textContent = teamName;
-                    }
-                    selectElement.appendChild(option);
-                });
+                selectElement.innerHTML = teamOptions.map((teamName, index) => 
+                    `<option value="${teamName}">${index === 0 ? (placeholder || '-- Select Team --') : teamName}</option>`
+                ).join('');
             }
-            const knockoutSelects = document.querySelectorAll('.knockout-selector select');
-            knockoutSelects.forEach(select => {
+            document.querySelectorAll('.knockout-selector select').forEach(select => {
                 populateSelect(select, select.dataset.placeholder);
                 select.addEventListener('change', updateMainDropdown);
             });
-            const fixtureKnockoutSelects = document.querySelectorAll('.fixture-knockout-select');
-            fixtureKnockoutSelects.forEach(select => {
-                populateSelect(select);
-            });
+            document.querySelectorAll('.fixture-knockout-select').forEach(select => populateSelect(select));
         });
         
         function updateMainDropdown() {
@@ -1222,14 +1449,13 @@
             };
             for (const key in knockoutMapping) {
                 const match = knockoutMapping[key];
-                const select1 = document.getElementById(match.t1);
-                const select2 = document.getElementById(match.t2);
-                if (!select1 || !select2) continue;
-                const team1 = select1.value || select1.dataset.placeholder;
-                const team2 = select2.value || select2.dataset.placeholder;
-                const newText = `${match.prefix}${team1} vs ${team2}`;
-                match.link.textContent = newText;
-                match.link.setAttribute('data-match', newText);
+                const team1 = document.getElementById(match.t1)?.value || document.getElementById(match.t1)?.dataset.placeholder;
+                const team2 = document.getElementById(match.t2)?.value || document.getElementById(match.t2)?.dataset.placeholder;
+                if (match.link) {
+                    const newText = `${match.prefix}${team1} vs ${team2}`;
+                    match.link.textContent = newText;
+                    match.link.setAttribute('data-match', newText);
+                }
             }
         }
       
@@ -1248,15 +1474,12 @@
         }
       
         // ================================================
-        // ## নতুন ফাংশন এবং পরিবর্তিত ফাংশন ##
+        // Scorecard Rendering and Logic
         // ================================================
-
         window.saveCurrentBowler = function(matchRef, bowlingTeam) {
-            const safeBowlingTeam = bowlingTeam.replace(/\s+/g, '-');
-            const selector = document.getElementById(`current-bowler-${matchRef}-${safeBowlingTeam}`);
-            const bowlerIndex = selector.value;
-            if (scorecardData[matchRef] && scorecardData[matchRef][bowlingTeam]) {
-                scorecardData[matchRef][bowlingTeam].currentBowlerIndex = bowlerIndex;
+            const selector = document.getElementById(`current-bowler-${matchRef}-${bowlingTeam.replace(/\s+/g, '-')}`);
+            if (scorecardData[matchRef]?.[bowlingTeam]) {
+                scorecardData[matchRef][bowlingTeam].currentBowlerIndex = selector.value;
                 const matchInfo = getMatchInfo();
                 saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
             }
@@ -1266,17 +1489,13 @@
             const batsman = scorecardData[matchRef][team].batting[batsmanIndex];
             batsman[stat] = (batsman[stat] || 0) + 1;
 
-            // যদি রান বৃদ্ধি পায়, বর্তমান বোলারের রানও বৃদ্ধি করুন
             if (stat === 'runs') {
                 const matchInfo = getMatchInfo();
                 const bowlingTeam = team === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
                 const currentBowlerIndex = scorecardData[matchRef][bowlingTeam].currentBowlerIndex;
-
                 if (currentBowlerIndex !== undefined && currentBowlerIndex !== "") {
                     const bowler = scorecardData[matchRef][bowlingTeam].bowling[currentBowlerIndex];
-                    if(bowler) {
-                        bowler.runs = (bowler.runs || 0) + 1;
-                    }
+                    if(bowler) bowler.runs = (bowler.runs || 0) + 1;
                 }
             }
             const matchInfo = getMatchInfo();
@@ -1285,17 +1504,12 @@
 
         window.incrementExtra = function(matchRef, team) {
             scorecardData[matchRef][team].extraRuns = (scorecardData[matchRef][team].extraRuns || 0) + 1;
-            
-            // অতিরিক্ত রানের জন্যও বর্তমান বোলারের রান বৃদ্ধি করুন
             const matchInfo = getMatchInfo();
             const bowlingTeam = team === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
             const currentBowlerIndex = scorecardData[matchRef][bowlingTeam].currentBowlerIndex;
-
             if (currentBowlerIndex !== undefined && currentBowlerIndex !== "") {
                 const bowler = scorecardData[matchRef][bowlingTeam].bowling[currentBowlerIndex];
-                if(bowler) {
-                    bowler.runs = (bowler.runs || 0) + 1;
-                }
+                if(bowler) bowler.runs = (bowler.runs || 0) + 1;
             }
             saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
         };
@@ -1308,12 +1522,9 @@
             html += `<h3>${inningsTitle} - ${battingTeam}</h3>`;
             const matchData = scorecardData[matchRef];
             html += `<table class="player-table">
-                <thead>
-                    <tr><th>Batsman</th><th>How Out</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>S/R</th><th>Actions</th></tr>
-                </thead><tbody>`;
+                <thead><tr><th>Batsman</th><th>How Out</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>S/R</th><th>Actions</th></tr></thead><tbody>`;
             matchData[battingTeam].batting.forEach((batsman, i) => {
                 const sr = batsman.balls > 0 ? ((batsman.runs / batsman.balls) * 100).toFixed(2) : "0.00";
-                const safeBattingTeam = battingTeam.replace(/\s+/g, '-');
                 html += `<tr class="${batsman.isOut ? 'batsman-out-row' : ''}">
                     <td contenteditable="true" onblur="updateField('${matchRef}','${battingTeam}','batting',${i},'name',this.innerText)">${batsman.name}</td>
                     <td contenteditable="true" onblur="updateField('${matchRef}','${battingTeam}','batting',${i},'howOut',this.innerText)">${batsman.howOut || ''}</td>
@@ -1321,65 +1532,25 @@
                     <td>${batsman.balls}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'balls')">+</button></td>
                     <td>${batsman.fours}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'fours')">+</button></td>
                     <td>${batsman.sixes}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'sixes')">+</button></td>
-                    <td><span id="sr-${matchRef}-${safeBattingTeam}-${i}">${sr}</span></td>
-                    <td>
-                      <div class="action-btn-group">
-                        ${!batsman.isOut ? `<button class="out-btn" onclick="markAsOut('${matchRef}','${battingTeam}',${i})">Out</button>` : ''}
-                        <button class="reset-btn" onclick="resetBatsman('${matchRef}','${battingTeam}', ${i})">Reset</button>
-                      </div>
-                    </td>
+                    <td>${sr}</td>
+                    <td><div class="action-btn-group">${!batsman.isOut ? `<button class="out-btn" onclick="markAsOut('${matchRef}','${battingTeam}',${i})">Out</button>` : ''}<button class="reset-btn" onclick="resetBatsman('${matchRef}','${battingTeam}', ${i})">Reset</button></div></td>
                 </tr>`;
             });
             html += `</tbody><tfoot>
-                <tr class="batting-summary-row">
-                    <td colspan="2">Extra</td>
-                    <td colspan="6">
-                      <span>${matchData[battingTeam].extraRuns || 0}</span>
-                      <button class="stat-increment-btn" onclick="incrementExtra('${matchRef}', '${battingTeam}')">+</button>
-                    </td>
-                </tr>
-                <tr class="batting-summary-row">
-                    <td colspan="2">Total Run</td>
-                    <td colspan="6" id="total-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0</td>
-                </tr>
-                <tr class="batting-summary-row">
-                    <td colspan="2">Overs</td>
-                    <td colspan="6" id="overs-wickets-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0.0 / 0</td>
-                </tr>
+                <tr class="batting-summary-row"><td colspan="2">Extra</td><td colspan="6"><span>${matchData[battingTeam].extraRuns || 0}</span><button class="stat-increment-btn" onclick="incrementExtra('${matchRef}', '${battingTeam}')">+</button></td></tr>
+                <tr class="batting-summary-row"><td colspan="2">Total Run</td><td colspan="6" id="total-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0</td></tr>
+                <tr class="batting-summary-row"><td colspan="2">Overs</td><td colspan="6" id="overs-wickets-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0.0 / 0</td></tr>
             </tfoot></table>`;
             
-            // বোলিং সেকশনের জন্য নতুন হেডার
-            const safeBowlingTeam = bowlingTeam.replace(/\s+/g, '-');
             const currentBowlerIndex = matchData[bowlingTeam].currentBowlerIndex;
-            html += `<div class="bowling-section-header">
-                <h4>${bowlingTeam} Bowling</h4>
-                <div class="current-bowler-selector">
-                    <label for="current-bowler-${matchRef}-${safeBowlingTeam}">Current Bowler:</label>
-                    <select id="current-bowler-${matchRef}-${safeBowlingTeam}" onchange="saveCurrentBowler('${matchRef}', '${bowlingTeam}')">
-                        <option value="">-- Select --</option>
-                        ${matchData[bowlingTeam].bowling.map((b, i) => `<option value="${i}" ${currentBowlerIndex == i ? 'selected' : ''}>${b.name || 'New Bowler'}</option>`).join('')}
-                    </select>
-                </div>
-            </div>`;
-            
-            html += `<table class="player-table">
-                <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th></th></tr></thead><tbody>`;
+            html += `<div class="bowling-section-header"><h4>${bowlingTeam} Bowling</h4><div class="current-bowler-selector"><label for="current-bowler-${matchRef}-${bowlingTeam.replace(/\s+/g, '-')}">Current Bowler:</label><select id="current-bowler-${matchRef}-${bowlingTeam.replace(/\s+/g, '-')}" onchange="saveCurrentBowler('${matchRef}', '${bowlingTeam}')"><option value="">-- Select --</option>${matchData[bowlingTeam].bowling.map((b, i) => `<option value="${i}" ${currentBowlerIndex == i ? 'selected' : ''}>${b.name || 'New Bowler'}</option>`).join('')}</select></div></div>`;
+            html += `<table class="player-table"><thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th></th></tr></thead><tbody>`;
             matchData[bowlingTeam].bowling.forEach((bowler, i) => {
-                html += `<tr>
-                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'name',this.innerText)">${bowler.name || 'New Bowler'}</td>
-                    <td><span>${bowler.overs || 0}</span><button class="stat-increment-btn" onclick="incrementOver('${matchRef}','${bowlingTeam}',${i})">+</button></td>
-                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'runs',this.innerText)">${bowler.runs || 0}</td>
-                    <td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'wkts',this.innerText)">${bowler.wkts || 0}</td>
-                    <td><button class="delete-btn" onclick="deleteBowler('${matchRef}', '${bowlingTeam}', ${i})">Delete</button></td>
-                </tr>`;
+                html += `<tr><td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'name',this.innerText)">${bowler.name || 'New Bowler'}</td><td><span>${bowler.overs || 0}</span><button class="stat-increment-btn" onclick="incrementOver('${matchRef}','${bowlingTeam}',${i})">+</button></td><td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'runs',this.innerText)">${bowler.runs || 0}</td><td contenteditable="true" onblur="updateField('${matchRef}','${bowlingTeam}','bowling',${i},'wkts',this.innerText)">${bowler.wkts || 0}</td><td><button class="delete-btn" onclick="deleteBowler('${matchRef}', '${bowlingTeam}', ${i})">Delete</button></td></tr>`;
             });
             html += `</tbody></table><button class="add-bowler-btn" onclick="addBowler('${matchRef}', '${bowlingTeam}')">Add Bowler</button>`;
             return html;
         }
-
-        // ================================================
-        // অপরিবর্তিত ফাংশনগুলো নিচে রয়েছে
-        // ================================================
 
         window.saveTossAndReload = function() {
           const matchInfo = getMatchInfo();
@@ -1393,15 +1564,13 @@
         window.updateMatchOvers = function(matchRef) {
           const matchInfo = getMatchInfo();
           if (!matchInfo) return;
-          const overs = document.getElementById(`match-overs-${matchRef}`).value;
-          scorecardData[matchRef].totalOvers = parseInt(overs);
-          saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+          scorecardData[matchRef].totalOvers = parseInt(document.getElementById(`match-overs-${matchRef}`).value);
+          saveAndRender(matchInfo.matchRef, matchInfo.team1, matchInfo.team2);
         }
     
         function updateTotal(matchRef, team) {
           let totalRuns = calculateTeamTotal(matchRef, team);
-          const safeTeamName = team.replace(/\s+/g, '-');
-          const totalEl = document.getElementById(`total-${matchRef}-${safeTeamName}`);
+          const totalEl = document.getElementById(`total-${matchRef}-${team.replace(/\s+/g, '-')}`);
           if(totalEl) totalEl.innerText = totalRuns;
         }
       
@@ -1411,8 +1580,7 @@
           const wickets = matchData[battingTeam].batting.filter(p => p.isOut).length;
           const totalBalls = calculateBallsBowled(matchRef, bowlingTeam);
           const overs = `${Math.floor(totalBalls / 6)}.${totalBalls % 6}`;
-          const safeBattingTeam = battingTeam.replace(/\s+/g, '-');
-          const oversEl = document.getElementById(`overs-wickets-${matchRef}-${safeBattingTeam}`);
+          const oversEl = document.getElementById(`overs-wickets-${matchRef}-${battingTeam.replace(/\s+/g, '-')}`);
           if(oversEl) oversEl.innerText = `${overs} / ${wickets}`;
         }
 
@@ -1421,9 +1589,8 @@
           const bowlingTeam = battingTeam === matchInfo.team1 ? matchInfo.team2 : matchInfo.team1;
           const bowlers = scorecardData[matchRef][bowlingTeam].bowling;
           let bowlerOptions = bowlers.map((b, i) => `${i}: ${b.name || 'Unnamed Bowler'}`).join('\n');
-          const bowlerIndexStr = prompt(`Who took the wicket?\n${bowlerOptions}`);
-          const bowlerIndex = parseInt(bowlerIndexStr);
-          if (bowlerIndexStr !== null && !isNaN(bowlerIndex) && bowlers[bowlerIndex]) {
+          const bowlerIndex = parseInt(prompt(`Who took the wicket?\n${bowlerOptions}`));
+          if (!isNaN(bowlerIndex) && bowlers[bowlerIndex]) {
               bowlers[bowlerIndex].wkts = (bowlers[bowlerIndex].wkts || 0) + 1;
               const howOut = prompt("How was the batsman out? (e.g., b bowler's name)");
               scorecardData[matchRef][battingTeam].batting[batsmanIndex].isOut = true;
@@ -1435,12 +1602,7 @@
         window.resetBatsman = function(matchRef, team, batsmanIndex) {
           if (confirm('Are you sure you want to reset this batsman?')) {
             const batsman = scorecardData[matchRef][team].batting[batsmanIndex];
-            batsman.runs = 0;
-            batsman.balls = 0;
-            batsman.fours = 0;
-            batsman.sixes = 0;
-            batsman.isOut = false;
-            batsman.howOut = '';
+            Object.assign(batsman, { runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' });
             const matchInfo = getMatchInfo();
             saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
           }
@@ -1458,33 +1620,23 @@
             }
             const matchData = scorecardData[matchRef];
             const toss = matchData.toss;
-            let html = `<div class="toss-section">
-                <label for="toss-winner-${matchRef}">Toss Won By:</label>
-                <select id="toss-winner-${matchRef}" onchange="saveTossAndReload()">
-                    <option value="${team1}" ${toss.winner === team1 ? 'selected' : ''}>${team1}</option>
-                    <option value="${team2}" ${toss.winner === team2 ? 'selected' : ''}>${team2}</option>
-                </select>
-                <label for="toss-decision-${matchRef}">Decision:</label>
-                <select id="toss-decision-${matchRef}" onchange="saveTossAndReload()">
-                    <option value="bat" ${toss.decision === 'bat' ? 'selected' : ''}>Bat</option>
-                    <option value="bowl" ${toss.decision === 'bowl' ? 'selected' : ''}>Bowl</option>
-                </select>
-            </div>`;
-            html += `<div class="scorecard-settings">
-                <label for="match-overs-${matchRef}">Match Overs:</label>
-                <select id="match-overs-${matchRef}" onchange="updateMatchOvers('${matchRef}')">
-                    ${Array.from({length: 20}, (_, i) => `<option value="${i+1}" ${matchData.totalOvers == i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
-                </select>
-            </div>`;
+            let html = `<div class="toss-section"><label>Toss Won By:</label><select id="toss-winner-${matchRef}" onchange="saveTossAndReload()"><option value="${team1}" ${toss.winner === team1 ? 'selected' : ''}>${team1}</option><option value="${team2}" ${toss.winner === team2 ? 'selected' : ''}>${team2}</option></select><label>Decision:</label><select id="toss-decision-${matchRef}" onchange="saveTossAndReload()"><option value="bat" ${toss.decision === 'bat' ? 'selected' : ''}>Bat</option><option value="bowl" ${toss.decision === 'bowl' ? 'selected' : ''}>Bowl</option></select></div>`;
+            html += `<div class="scorecard-settings"><label>Match Overs:</label><select id="match-overs-${matchRef}" onchange="updateMatchOvers('${matchRef}')">${Array.from({length: 20}, (_, i) => `<option value="${i+1}" ${matchData.totalOvers == i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}</select></div>`;
+            
             const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
             const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
             const { targetInfo } = calculateResult(matchRef);
+            
             html += renderInnings(matchRef, firstInningsTeam, secondInningsTeam, '1st Innings');
             html += renderInnings(matchRef, secondInningsTeam, firstInningsTeam, '2nd Innings', targetInfo);
+            
+            // PDF ডাউনলোড বাটন যুক্ত করা হয়েছে
             html += `<div class="scorecard-actions">
-              <button class="btn save-score-btn" onclick="saveScorecard()">Save Scorecard</button>
-              <button class="btn reset-match-btn" onclick="resetScorecard()">Reset Match Data</button>
-            </div>`;
+                        <button class="btn save-score-btn" onclick="saveScorecard()">Save Scorecard</button>
+                        <button class="btn reset-match-btn" onclick="resetScorecard()">Reset Match Data</button>
+                        <button class="btn download-pdf-btn" onclick="downloadScorecardAsPDF()">Download as PDF</button>
+                     </div>`;
+            
             document.getElementById("scorecardContent").innerHTML = html;
             updateTotal(matchRef, team1);
             updateTotal(matchRef, team2);
@@ -1512,21 +1664,10 @@
                 resultText = `${secondInningsTeam} won by ${11 - wickets2} wickets.`;
                 matchOver = true;
             } else if (balls2 >= totalBallsForMatch || wickets2 === 11) {
-                if (score1 > score2) {
-                    resultText = `${firstInningsTeam} won by ${score1 - score2} runs.`;
-                } else if (score2 > score1) {
-                    resultText = `${secondInningsTeam} won by ${11 - wickets2} wickets.`;
-                } else {
-                    resultText = "Match Tied.";
-                }
+                resultText = score1 > score2 ? `${firstInningsTeam} won by ${score1 - score2} runs.` : (score2 > score1 ? `${secondInningsTeam} won by ${11 - wickets2} wickets.` : "Match Tied.");
                 matchOver = true;
             }
-            const targetInfo = {
-                team: secondInningsTeam,
-                runs: Math.max(0, target - score2),
-                balls: Math.max(0, totalBallsForMatch - balls2),
-                matchOver: matchOver
-            };
+            const targetInfo = { team: secondInningsTeam, runs: Math.max(0, target - score2), balls: Math.max(0, totalBallsForMatch - balls2), matchOver: matchOver };
             return { resultText, targetInfo };
         }
     
@@ -1534,7 +1675,7 @@
             const livePanel = document.getElementById('live-panel');
             const matchInfo = getMatchInfo();
             if (!matchInfo || !scorecardData[matchRef]) {
-                livePanel.innerHTML = `<h3>Live Score</h3><p>ম্যাচের তথ্য পাওয়া যায়নি।</p>`;
+                livePanel.innerHTML = `<h3>Live Score</h3><p>Match data not found.</p>`;
                 return;
             }
             const { team1, team2 } = matchInfo;
@@ -1542,64 +1683,46 @@
             const toss = matchData.toss;
             const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
             const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
-            let html = `<div class="live-score-container"><h3>${team1} vs ${team2}</h3>`;
-            html += `<div class="live-score-summary">${toss.winner} won the toss and chose to ${toss.decision}.</div>`;
+            
+            let html = `<div class="live-score-container"><h3>${team1} vs ${team2}</h3><div class="live-score-summary">${toss.winner} won the toss and chose to ${toss.decision}.</div>`;
+            
             const score1 = calculateTeamTotal(matchRef, firstInningsTeam);
             const balls1 = calculateBallsBowled(matchRef, secondInningsTeam);
             const overs1 = `${Math.floor(balls1 / 6)}.${balls1 % 6}`;
             const wickets1 = matchData[firstInningsTeam].batting.filter(p => p.isOut).length;
-            html += `<div class="live-innings-card">
-                <div class="team-score">
-                    <span>${firstInningsTeam}</span>
-                    <span>${score1} / ${wickets1} <small>(${overs1})</small></span>
-                </div>
-            </div>`;
-            const balls2 = calculateBallsBowled(matchRef, firstInningsTeam);
+            html += `<div class="live-innings-card"><div class="team-score"><span>${firstInningsTeam}</span><span>${score1} / ${wickets1} <small>(${overs1})</small></span></div></div>`;
+            
             const totalBallsForMatch = (matchData.totalOvers || 10) * 6;
-            const isSecondInnings = (balls1 >= totalBallsForMatch || wickets1 === 11 || balls2 > 0);
-            if (isSecondInnings) {
+            if (balls1 >= totalBallsForMatch || wickets1 === 11 || calculateBallsBowled(matchRef, firstInningsTeam) > 0) {
                 const score2 = calculateTeamTotal(matchRef, secondInningsTeam);
+                const balls2 = calculateBallsBowled(matchRef, firstInningsTeam);
                 const overs2 = `${Math.floor(balls2 / 6)}.${balls2 % 6}`;
                 const wickets2 = matchData[secondInningsTeam].batting.filter(p => p.isOut).length;
                 const { targetInfo } = calculateResult(matchRef);
-                html += `<div class="live-innings-card">
-                    <div class="team-score">
-                        <span>${secondInningsTeam}</span>
-                        <span>${score2} / ${wickets2} <small>(${overs2})</small></span>
-                    </div>`;
+                html += `<div class="live-innings-card"><div class="team-score"><span>${secondInningsTeam}</span><span>${score2} / ${wickets2} <small>(${overs2})</small></span></div>`;
                 if (targetInfo && !targetInfo.matchOver) {
                     html += `<div class="target-display" style="margin-top: 15px;">Needs ${targetInfo.runs} runs in ${targetInfo.balls} balls.</div>`;
                 }
                 html += `</div>`;
             }
             const { resultText } = calculateResult(matchRef);
-            if (resultText) {
-                html += `<div class="match-result">${resultText}</div>`;
-            }
+            if (resultText) html += `<div class="match-result">${resultText}</div>`;
             html += `</div>`;
             livePanel.innerHTML = html;
         }
 
         window.incrementOver = function(matchRef, bowlingTeam, index) {
             const bowler = scorecardData[matchRef][bowlingTeam].bowling[index];
-            let oversStr = String(bowler.overs || '0.0');
-            let parts = oversStr.split('.');
-            let fullOvers = parseInt(parts[0]) || 0;
-            let balls = parseInt(parts[1]) || 0;
-            if (balls < 5) {
-                balls++;
-            } else {
-                balls = 0;
-                fullOvers++;
-            }
+            let [fullOvers, balls] = (String(bowler.overs || '0.0')).split('.').map(Number);
+            balls = (balls < 5) ? balls + 1 : (fullOvers++, 0);
             bowler.overs = `${fullOvers}.${balls}`;
             const matchInfo = getMatchInfo();
             saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
         }
       
         window.addBowler = function(matchRef, bowlingTeam) {
-          const matchInfo = getMatchInfo();
           scorecardData[matchRef][bowlingTeam].bowling.push({ name: 'New Bowler', overs: 0, runs: 0, wkts: 0 });
+          const matchInfo = getMatchInfo();
           saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
         }
     
@@ -1612,30 +1735,105 @@
         }
     
         window.updateField = function(matchRef, team, type, index, field, value) {
-          let numericValue = (field !== 'name' && field !== 'howOut' && field !== 'overs') ? parseFloat(value) || 0 : value;
-          scorecardData[matchRef][team][type][index][field] = numericValue;
+          scorecardData[matchRef][team][type][index][field] = (field !== 'name' && field !== 'howOut' && field !== 'overs') ? parseFloat(value) || 0 : value;
           const matchInfo = getMatchInfo();
           saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
         }
     
         function calculateTeamTotal(matchRef, team) {
           const data = scorecardData[matchRef]?.[team];
-          if (!data) return 0;
-          let totalRuns = data.batting.reduce((acc, p) => acc + (p.runs || 0), 0);
-          totalRuns += data.extraRuns || 0;
-          return totalRuns;
+          return data ? data.batting.reduce((acc, p) => acc + (p.runs || 0), 0) + (data.extraRuns || 0) : 0;
         }
     
         function calculateBallsBowled(matchRef, bowlingTeam) {
           const data = scorecardData[matchRef]?.[bowlingTeam];
-          if (!data || !data.bowling) return 0;
-          return data.bowling.reduce((acc, b) => {
-              const oversStr = String(b.overs || '0.0');
-              const parts = oversStr.split('.');
-              const fullOvers = parseInt(parts[0], 10) || 0;
-              const balls = parseInt(parts[1], 10) || 0;
+          return data?.bowling.reduce((acc, b) => {
+              const [fullOvers, balls] = (String(b.overs || '0.0')).split('.').map(Number);
               return acc + (fullOvers * 6) + balls;
-          }, 0);
+          }, 0) || 0;
+        }
+
+        // পিডিএফ ডাউনলোড করার জন্য ফাংশন
+        window.downloadScorecardAsPDF = function() {
+            const matchInfo = getMatchInfo();
+            if (!matchInfo) {
+                alert("Please select a match first.");
+                return;
+            }
+            const element = document.getElementById('scorecardContent');
+            const filename = `${matchInfo.team1.replace(/\s+/g, '_')}_vs_${matchInfo.team2.replace(/\s+/g, '_')}_Scorecard.pdf`;
+            const opt = {
+                margin:       10,
+                filename:     filename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().from(element).set(opt).save();
+        }
+        
+        // Floating Score Bar এর জন্য JavaScript Logic
+        function updateFloatingScoreBar(matchRef) {
+            const matchInfo = getMatchInfo();
+            if (!matchInfo || !scorecardData[matchRef]) return;
+            const { team1, team2 } = matchInfo;
+            const matchData = scorecardData[matchRef];
+            const toss = matchData.toss;
+            const firstInningsTeam = toss.decision === 'bat' ? toss.winner : (toss.winner === team1 ? team2 : team1);
+            const secondInningsTeam = firstInningsTeam === team1 ? team2 : team1;
+
+            const score1 = calculateTeamTotal(matchRef, firstInningsTeam);
+            const balls1 = calculateBallsBowled(matchRef, secondInningsTeam);
+            const overs1 = `${Math.floor(balls1 / 6)}.${balls1 % 6}`;
+            const wickets1 = matchData[firstInningsTeam].batting.filter(p => p.isOut).length;
+
+            document.getElementById('float-team1-name').innerText = firstInningsTeam;
+            document.getElementById('float-team1-score').innerText = `${score1}/${wickets1}`;
+            document.getElementById('float-team1-overs').innerText = `(${overs1})`;
+
+            const score2 = calculateTeamTotal(matchRef, secondInningsTeam);
+            const balls2 = calculateBallsBowled(matchRef, firstInningsTeam);
+            const overs2 = `${Math.floor(balls2 / 6)}.${balls2 % 6}`;
+            const wickets2 = matchData[secondInningsTeam].batting.filter(p => p.isOut).length;
+
+            document.getElementById('float-team2-name').innerText = secondInningsTeam;
+            document.getElementById('float-team2-score').innerText = `${score2}/${wickets2}`;
+            document.getElementById('float-team2-overs').innerText = `(${overs2})`;
+
+            const { resultText, targetInfo } = calculateResult(matchRef);
+            const resultEl = document.getElementById('float-match-result');
+            if (resultText) {
+                resultEl.innerText = resultText;
+                resultEl.style.display = 'block';
+            } else if (targetInfo && !targetInfo.matchOver && balls1 > 0) {
+                 resultEl.innerText = `${targetInfo.team} needs ${targetInfo.runs} in ${targetInfo.balls} balls`;
+                 resultEl.style.display = 'block';
+            } else {
+                resultEl.style.display = 'none';
+            }
+        }
+
+        function makeDraggable(element) {
+            let isDragging = false;
+            let offsetX, offsetY;
+            const header = element.querySelector('#floatingScoreBar-header');
+            header.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                offsetX = e.clientX - element.offsetLeft;
+                offsetY = e.clientY - element.offsetTop;
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                element.style.left = `${e.clientX - offsetX}px`;
+                element.style.top = `${e.clientY - offsetY}px`;
+            }
+            function onMouseUp() {
+                isDragging = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
         }
     </script>
 </body>
