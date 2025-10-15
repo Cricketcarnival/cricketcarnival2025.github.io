@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cricket Carnival 2025 - Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,6 +41,21 @@
             padding: 0;
             transition: background-color 0.5s;
         }
+        
+        /* Landscape Mode Enforcement for mobile */
+        @media screen and (max-width: 800px) and (orientation: portrait) {
+            html {
+                transform: rotate(-90deg);
+                transform-origin: left top;
+                width: 100vh;
+                height: 100vw;
+                overflow-x: hidden;
+                position: absolute;
+                top: 100%;
+                left: 0;
+            }
+        }
+
 
         /* Login Container Styles */
         .login-container {
@@ -362,41 +377,46 @@
         /* Floating Score Bar এর জন্য CSS */
         #floatingScoreBar {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 320px;
+            top: 10px;
+            right: 10px;
+            width: 220px;
             background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(1px);
             border: 1px solid #e0e0e0;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            z-index: 999;
+            z-index: 399;
             font-family: 'Inter', sans-serif;
             display: none; /* প্রাথমিকভাবে হিডেন থাকবে */
             color: #333;
+            /* রিসাইজ করার জন্য নিচের দুটি লাইন যোগ করা হয়েছে */
+            resize: both;
+            overflow: auto;
+            min-width: 180px; /* একটি সর্বনিম্ন প্রস্থ নির্ধারণ করা হয়েছে */
+            min-height: 120px; /* একটি সর্বনিম্ন উচ্চতা নির্ধারণ করা হয়েছে */
         }
         #floatingScoreBar.visible {
             display: block;
         }
         #floatingScoreBar-header {
-            padding: 10px 15px;
+            padding: 1px 5px;
             cursor: move;
             background-color: var(--deep-green);
             color: white;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 1em;
         }
         #floatingScoreBar-content {
-            padding: 15px;
+            padding: 10px;
             font-size: 0.95em;
         }
         .float-innings-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 4px 0;
             border-bottom: 1px solid #f0f0f0;
         }
         .float-innings-row:last-child {
@@ -425,7 +445,18 @@
         }
 
     </style>
-</head>
+    
+    <style>
+        .pdf-export .stat-increment-btn,
+        .pdf-export .action-btn-group,
+        .pdf-export .add-bowler-btn,
+        .pdf-export .scorecard-actions,
+        .pdf-export .current-bowler-selector,
+        .pdf-export .player-table .delete-btn {
+            display: none !important;
+        }
+    </style>
+    </head>
 <body>
     <div class="login-container" id="loginContainer">
         <div class="logo-container">
@@ -943,18 +974,18 @@
         let currentMatchRef = null;
         
         const defaultSquadData = {
-            "Corporate_Credit": Array.from({length: 11}, (_, i) => ({ name: `CC Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cc${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Card_Operation": Array.from({length: 11}, (_, i) => ({ name: `CO Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=co${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Wicket-keeper' : 'All-rounder')) })),
-            "ICT_Operation": Array.from({length: 11}, (_, i) => ({ name: `ICT Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=ict${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'Extra')) })),
-            "Dhaka_South_Zone": Array.from({length: 11}, (_, i) => ({ name: `DSZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dsz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Narayangonj_Zone": Array.from({length: 11}, (_, i) => ({ name: `NZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=nz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Dhaka_Central_Zone": Array.from({length: 11}, (_, i) => ({ name: `DCZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dcz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Treasury": Array.from({length: 11}, (_, i) => ({ name: `Treasury Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=tr${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Card_Business": Array.from({length: 11}, (_, i) => ({ name: `CB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "CAM_RD_Division": Array.from({length: 11}, (_, i) => ({ name: `CAM Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cam${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "ID_Division": Array.from({length: 11}, (_, i) => ({ name: `ID Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=id${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "SDD_Division": Array.from({length: 11}, (_, i) => ({ name: `SDD Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=sdd${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
-            "Principal_Branch": Array.from({length: 11}, (_, i) => ({ name: `PB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=pb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Corporate_Credit": Array.from({length: 2}, (_, i) => ({ name: `CC Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cc${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Card_Operation": Array.from({length: 2}, (_, i) => ({ name: `CO Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=co${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Wicket-keeper' : 'All-rounder')) })),
+            "ICT_Operation": Array.from({length: 2}, (_, i) => ({ name: `ICT Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=ict${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'Extra')) })),
+            "Dhaka_South_Zone": Array.from({length: 2}, (_, i) => ({ name: `DSZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dsz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Narayangonj_Zone": Array.from({length: 2}, (_, i) => ({ name: `NZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=nz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Dhaka_Central_Zone": Array.from({length: 2}, (_, i) => ({ name: `DCZ Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=dcz${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Treasury": Array.from({length: 2}, (_, i) => ({ name: `Treasury Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=tr${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Card_Business": Array.from({length: 2}, (_, i) => ({ name: `CB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "CAM_RD_Division": Array.from({length: 2}, (_, i) => ({ name: `CAM Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=cam${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "ID_Division": Array.from({length: 2}, (_, i) => ({ name: `ID Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=id${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "SDD_Division": Array.from({length: 2}, (_, i) => ({ name: `SDD Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=sdd${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
+            "Principal_Branch": Array.from({length: 2}, (_, i) => ({ name: `PB Player ${i+1}`, photoUrl: `https://i.pravatar.cc/50?u=pb${i}`, position: i === 0 ? 'Captain' : (i < 5 ? 'Batsman' : (i < 10 ? 'Bowler' : 'All-rounder')) })),
         };
 
         // ================================================
@@ -1533,14 +1564,14 @@
                     <td>${batsman.fours}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'fours')">+</button></td>
                     <td>${batsman.sixes}<button class="stat-increment-btn" onclick="incrementStat('${matchRef}','${battingTeam}',${i},'sixes')">+</button></td>
                     <td>${sr}</td>
-                    <td><div class="action-btn-group">${!batsman.isOut ? `<button class="out-btn" onclick="markAsOut('${matchRef}','${battingTeam}',${i})">Out</button>` : ''}<button class="reset-btn" onclick="resetBatsman('${matchRef}','${battingTeam}', ${i})">Reset</button></div></td>
+                    <td><div class="action-btn-group">${!batsman.isOut ? `<button class="out-btn" onclick="markAsOut('${matchRef}','${battingTeam}',${i})">Out</button>` : ''}<button class="reset-btn" onclick="resetBatsman('${matchRef}','${battingTeam}', ${i})">Reset</button><button class="delete-btn" onclick="deleteBatsman('${matchRef}', '${battingTeam}', ${i})">Delete</button></div></td>
                 </tr>`;
             });
             html += `</tbody><tfoot>
                 <tr class="batting-summary-row"><td colspan="2">Extra</td><td colspan="6"><span>${matchData[battingTeam].extraRuns || 0}</span><button class="stat-increment-btn" onclick="incrementExtra('${matchRef}', '${battingTeam}')">+</button></td></tr>
                 <tr class="batting-summary-row"><td colspan="2">Total Run</td><td colspan="6" id="total-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0</td></tr>
                 <tr class="batting-summary-row"><td colspan="2">Overs</td><td colspan="6" id="overs-wickets-${matchRef}-${battingTeam.replace(/\s+/g, '-')}">0.0 / 0</td></tr>
-            </tfoot></table>`;
+            </tfoot></table><button class="add-bowler-btn" style="margin-top: 10px; margin-bottom: 20px;" onclick="addBatsman('${matchRef}', '${battingTeam}')">Add Batsman</button>`;
             
             const currentBowlerIndex = matchData[bowlingTeam].currentBowlerIndex;
             html += `<div class="bowling-section-header"><h4>${bowlingTeam} Bowling</h4><div class="current-bowler-selector"><label for="current-bowler-${matchRef}-${bowlingTeam.replace(/\s+/g, '-')}">Current Bowler:</label><select id="current-bowler-${matchRef}-${bowlingTeam.replace(/\s+/g, '-')}" onchange="saveCurrentBowler('${matchRef}', '${bowlingTeam}')"><option value="">-- Select --</option>${matchData[bowlingTeam].bowling.map((b, i) => `<option value="${i}" ${currentBowlerIndex == i ? 'selected' : ''}>${b.name || 'New Bowler'}</option>`).join('')}</select></div></div>`;
@@ -1612,8 +1643,8 @@
             currentMatchRef = matchRef;
             if (!scorecardData[matchRef]) {
                 scorecardData[matchRef] = {
-                    [team1]: { batting: Array.from({length: 11}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
-                    [team2]: { batting: Array.from({length: 11}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
+                    [team1]: { batting: Array.from({length: 2}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
+                    [team2]: { batting: Array.from({length: 2}, (_, i) => ({ name: `Player ${i+1}`, runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' })), bowling: [], extraRuns: 0, currentBowlerIndex: "" },
                     toss: { winner: team1, decision: 'bat' },
                     totalOvers: 10
                 };
@@ -1725,6 +1756,20 @@
           const matchInfo = getMatchInfo();
           saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
         }
+
+        window.addBatsman = function(matchRef, battingTeam) {
+          scorecardData[matchRef][battingTeam].batting.push({ name: 'New Batsman', runs: 0, balls: 0, fours: 0, sixes: 0, isOut: false, howOut: '' });
+          const matchInfo = getMatchInfo();
+          saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+        }
+
+        window.deleteBatsman = function(matchRef, battingTeam, index) {
+          if (confirm('Are you sure you want to delete this batsman?')) {
+            scorecardData[matchRef][battingTeam].batting.splice(index, 1);
+            const matchInfo = getMatchInfo();
+            saveAndRender(matchRef, matchInfo.team1, matchInfo.team2);
+          }
+        }
     
         window.deleteBowler = function(matchRef, bowlingTeam, index) {
           if (confirm('Are you sure you want to delete this bowler?')) {
@@ -1753,7 +1798,7 @@
           }, 0) || 0;
         }
 
-        // পিডিএফ ডাউনলোড করার জন্য ফাংশন
+        // ▼▼▼ MODIFIED FUNCTION FOR PDF DOWNLOAD ▼▼▼
         window.downloadScorecardAsPDF = function() {
             const matchInfo = getMatchInfo();
             if (!matchInfo) {
@@ -1761,6 +1806,11 @@
                 return;
             }
             const element = document.getElementById('scorecardContent');
+            const body = document.body;
+
+            // Add class to hide elements before generating PDF
+            body.classList.add('pdf-export');
+
             const filename = `${matchInfo.team1.replace(/\s+/g, '_')}_vs_${matchInfo.team2.replace(/\s+/g, '_')}_Scorecard.pdf`;
             const opt = {
                 margin:       10,
@@ -1769,8 +1819,13 @@
                 html2canvas:  { scale: 2, useCORS: true },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            html2pdf().from(element).set(opt).save();
+
+            // Generate the PDF, and once it's done, remove the class
+            html2pdf().from(element).set(opt).save().then(function() {
+                body.classList.remove('pdf-export');
+            });
         }
+        // ▲▲▲ END OF MODIFIED FUNCTION ▲▲▲
         
         // Floating Score Bar এর জন্য JavaScript Logic
         function updateFloatingScoreBar(matchRef) {
@@ -1817,23 +1872,53 @@
             let isDragging = false;
             let offsetX, offsetY;
             const header = element.querySelector('#floatingScoreBar-header');
-            header.addEventListener('mousedown', (e) => {
+
+            function dragStart(e) {
                 isDragging = true;
-                offsetX = e.clientX - element.offsetLeft;
-                offsetY = e.clientY - element.offsetTop;
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-            });
-            function onMouseMove(e) {
+                // টাচস্ক্রিনের জন্য e.touches ব্যবহার করা হয়েছে
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                offsetX = clientX - element.offsetLeft;
+                offsetY = clientY - element.offsetTop;
+
+                document.addEventListener('mousemove', dragMove);
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchmove', dragMove, { passive: false }); // মোবাইলে স্ক্রল হওয়া বন্ধ করতে
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function dragMove(e) {
                 if (!isDragging) return;
-                element.style.left = `${e.clientX - offsetX}px`;
-                element.style.top = `${e.clientY - offsetY}px`;
+                e.preventDefault(); // মোবাইলে পেজ স্ক্রল হওয়া বন্ধ করতে
+
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                let newLeft = clientX - offsetX;
+                let newTop = clientY - offsetY;
+                
+                // স্ক্রিনের বাইরে যেন না যায় তা নিশ্চিত করা
+                const maxX = window.innerWidth - element.offsetWidth;
+                const maxY = window.innerHeight - element.offsetHeight;
+
+                newLeft = Math.max(0, Math.min(newLeft, maxX));
+                newTop = Math.max(0, Math.min(newTop, maxY));
+
+                element.style.left = `${newLeft}px`;
+                element.style.top = `${newTop}px`;
             }
-            function onMouseUp() {
+
+            function dragEnd() {
                 isDragging = false;
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
+                document.removeEventListener('mousemove', dragMove);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchmove', dragMove);
+                document.removeEventListener('touchend', dragEnd);
             }
+
+            header.addEventListener('mousedown', dragStart);
+            header.addEventListener('touchstart', dragStart);
         }
     </script>
 </body>
