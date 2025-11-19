@@ -1,0 +1,5 @@
+{
+  "name": "Cricket Scorer Admin",
+  "description": "A full-featured Cricket Scorer Admin Web App for managing matches, teams, players, and tournaments with live scoring capabilities, Firebase integration, and PDF scorecard generation.",
+  "requestFramePermissions": []
+}
